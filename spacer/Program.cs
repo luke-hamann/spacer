@@ -8,6 +8,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<SpacerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SpacerContext")));
 
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,10 +28,15 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseSession();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
+app.MapAreaControllerRoute(
+    name: "account",
+    areaName: "Account",
+    pattern: "Account/{controller=Account}/{action=Login}");
 
 app.Run();
