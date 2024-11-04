@@ -1,0 +1,25 @@
+﻿@model Post
+
+<div>
+    <div>
+        <a asp-controller="Post" asp-action="Index" asp-route-id="@Model.id">
+            @Model.title
+        </a>
+    </div>
+    <div>
+        <a asp-controller="Home" asp-action="Subspace" asp-route-id="@Model.forumId">
+            @Model.Subspace.name
+        </a>
+    </div>
+    <div>
+        @Model.creationDate
+    </div>
+    <div>
+        <a asp-controller="Home" asp-action="User" asp-route-id="@Model.User.id">
+            @Model.User.name
+        </a>
+    </div>
+    <div>
+        @Model.content
+    </div>
+</div>

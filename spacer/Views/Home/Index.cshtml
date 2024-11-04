@@ -1,3 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Spacer";
 }
+
+@await Html.PartialAsync("~/Views/Shared/_Search.cshtml", "")
+
+<h1>
+    @ViewData["Title"]
+</h1>
+
+<div>
+    <h2>
+        Popular Subspaces
+    </h2>
+    <ul>
+        @foreach (var subspace in ViewBag.popularSubspaces)
+        {
+            <li>
+                <a asp-controller="Home" asp-action="Subspace" asp-route-id="@subspace.id">@subspace.name</a>
+            </li>
+        }
+    </ul>
+</div>
