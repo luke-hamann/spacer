@@ -17,6 +17,15 @@
     }
 </div>
 
+<div>
+    <a asp-route-mode="oldest" class="btn btn-light">
+        Oldest
+    </a>
+    <a asp-route-mode="newest" class="btn btn-light">
+        Newest
+    </a>
+</div>
+
 <div class="row container row-gap-3">
     @foreach (var post in Model)
     {

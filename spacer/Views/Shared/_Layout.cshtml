@@ -49,7 +49,9 @@
                         }
                         else
                         {
-                            <span class="nav-link">Logged in as @ViewBag.currentUser.name</span>
+                            <a asp-controller="Home" asp-action="User" asp-route-id="@ViewBag.currentUser.id" class="nav-link">
+                                Logged in as @ViewBag.currentUser.name
+                            </a>
                             <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
                                 <button type="submit" class="btn btn-danger">
                                     Logout

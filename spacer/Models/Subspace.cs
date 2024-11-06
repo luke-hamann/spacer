@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-
-namespace spacer.Models
+﻿namespace spacer.Models
 {
     public class Subspace
     {
