@@ -78,6 +78,26 @@ namespace spacer.Controllers
         }
 
         [HttpPost]
+        [Route("/new/")]
+        public IActionResult New(Post post)
+        {
+            ViewBag.currentUser = GetCurrentUser();
+            ViewBag.popularSubspaces = GetPopularSubspaces();
+            
+            if (!ModelState.IsValid)
+            {
+                return View(post);
+            }
+
+            post.creationDate = DateTime.Now;
+
+            _context.Add(post);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Post", new { post.id });
+        }
+
+        [HttpPost]
         public IActionResult Comment(int postId, string content)
         {
             User? currentUser = GetCurrentUser();

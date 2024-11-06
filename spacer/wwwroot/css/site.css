@@ -25,6 +25,7 @@ a {
     background: rgb(61, 61, 61);
     writing-mode: vertical-lr;
     transform: scale(-1, -1);
+    text-align: center;
     color: rgb(0, 255, 0);
 }
 

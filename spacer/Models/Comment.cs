@@ -12,10 +12,10 @@ namespace spacer.Models
 
         //Relationships
         public int userId { get; set; }
-        public User User { get; set; } = null!;
+        public User? User { get; set; } = null!;
 
         public int postId { get; set; }
-        public Post Post { get; set; } = null!;
+        public Post? Post { get; set; } = null!;
 
     }
 }
