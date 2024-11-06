@@ -22,17 +22,21 @@
 </nav>
 
 
-
-@if (ViewBag.selection == "posts"){
-foreach (Post post in ViewBag.content)
-{
-        @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
-    }
-} else {
-    foreach (Comment c in ViewBag.content)
+<div class="row container row-gap-3">
+    @if (ViewBag.selection == "posts")
     {
-        
+        foreach (Post post in ViewBag.content)
+        {
+            @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+        }
+    }
+    else
+    {
+        foreach (Comment c in ViewBag.content)
+        {
+
             @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", c)
 
+        }
     }
-}
+</div>

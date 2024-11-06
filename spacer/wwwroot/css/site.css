@@ -1,3 +1,35 @@
-a.title {
-    fornt
+a.Title {
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
 }
+
+a.Post-subspace {
+    color: grey;
+}
+
+a {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.date {
+    font-size: 1rem;
+    color: gray;
+}
+
+.post-user {
+    padding-inline: 5%;
+    width: 40px;
+    background: rgb(61, 61, 61);
+    writing-mode: vertical-lr;
+    transform: scale(-1, -1);
+    color: rgb(0, 255, 0);
+}
+
+.post-user-text {
+
+    color: rgb(0, 255, 0);
+}    
+
