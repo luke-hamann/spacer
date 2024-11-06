@@ -19,11 +19,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <<form class="d-flex" role="search" asp-action="Search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form class="d-flex" role="search" asp-action="Search" method="get">
+                        <select name="subspaceId">
+                            <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
+                                (all)
+                            </!option>
+                            @foreach (Subspace subspace in ViewBag.popularSubspaces)
+                            {
+                                <!option value="@subspace.id" @(ViewBag.searchSubspaceId == subspace.id ? "selected" : "") >
+                                    @subspace.name
+                                </!option>
+                            }
+                        </select>
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="@ViewBag.searchQuery">
+                        <button class="btn btn-outline-success" type="submit">
+                            Search
+                        </button>
                     </form>
-                     @if (ViewBag.user == null)
+                     @if (ViewBag.currentUser == null)
                         {
                             <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login">
                                 Login
