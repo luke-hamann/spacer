@@ -64,11 +64,11 @@ namespace spacer.Controllers
             return View(posts);
         }
 
-        [HttpGet]
-        [Route("/user/{id}/")]
-        public IActionResult User(int id)
+  
+        public IActionResult User(int id, string section="posts")
         {
             ViewBag.currentUser = GetCurrentUser();
+            ViewBag.popularSubspaces = GetPopularSubspaces();
 
             ViewBag.userProfile = _context.Users.Find(id);
 
@@ -77,12 +77,28 @@ namespace spacer.Controllers
                 return NotFound();
             }
 
-            ViewBag.posts = _context.Posts
+            if (section == "posts")
+            {
+                ViewBag.selection = "posts";
+
+                ViewBag.content = _context.Posts
                 .Include(p => p.Subspace)
                 .Include(p => p.User)
                 .Where(p => p.userId == id)
                 .OrderBy(p => p.creationDate)
                 .ToList();
+            } else
+            {
+                ViewBag.selection = "comments";
+
+                ViewBag.content = _context.Comments
+                .Include(p => p.Post)
+                .Include(p => p.User)
+                .Where(p => p.userId == id)
+                .ToList();
+            }
+
+  
 
             return View();
         }
