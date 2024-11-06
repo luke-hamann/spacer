@@ -5,42 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body>
+<body class="container mt-4 bg-dark text-light rounded">
     <header>
-        <nav>
-            <ul>
-                <li>
-                    <a asp-controller="Home" asp-action="Index">
-                        Home
-                    </a>
-                </li>
-                @if (ViewBag.user == null)
-                {
-                    <li>
-                        <a asp-area="Account" asp-controller="Account" asp-action="Login">
-                            Login
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-area="Account" asp-controller="Account" asp-action="Register">
+   <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                Home
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <<form class="d-flex" role="search" asp-action="Search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                     @if (ViewBag.user == null)
+                        {
+                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login">
+                                Login
+                            </a>
+                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Register">
                             Register
-                        </a>
-                    </li>
-                }
-                else
-                {
-                    <li>
-                        @ViewBag.user.name
-                    </li>
-                    <li>
-                        <form asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
-                            <input type="submit" value="Logout" />
-                        </form>
-                    </li>
-                }
-            </ul>
-        </nav>
+                            </a>
+                        }
+                        else
+                        {
+                                 <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
+                                <input type="submit" value="Logout" />
+                            </form>
+                        }
+
+                    </div>
+            </div>
+        </div>
+    </nav>
+
     </header>
     <main>
         @RenderBody()

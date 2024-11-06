@@ -1,4 +1,5 @@
-﻿@{
+@model List<Post>
+@{
     ViewData["Title"] = "Spacer";
 }
 
@@ -20,4 +21,11 @@
             </li>
         }
     </ul>
+</div>
+
+<div>
+    @foreach (Post post in Model)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+    }
 </div>
