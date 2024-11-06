@@ -1,19 +1,31 @@
-﻿@{
+@model List<Post>
+@{
     ViewData["Title"] = "Spacer";
 }
-@model List<Post>
 
-@foreach(Post p in Model)
-{
-    <div>
-        <p> @p.Subspace </p>
-        <p> @p.content </p>
-        <p> @p.creationDate </p>
-        @foreach (Comment c in p.Comments)
+@await Html.PartialAsync("~/Views/Shared/_Search.cshtml", "")
+
+<h1>
+    @ViewData["Title"]
+</h1>
+
+<div>
+    <h2>
+        Popular Subspaces
+    </h2>
+    <ul>
+        @foreach (var subspace in ViewBag.popularSubspaces)
         {
-        <p>
-        @c.content
-        </p>
+            <li>
+                <a asp-controller="Home" asp-action="Subspace" asp-route-id="@subspace.id">@subspace.name</a>
+            </li>
         }
-    </div>
-}
+    </ul>
+</div>
+
+<div>
+    @foreach (Post post in Model)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+    }
+</div>

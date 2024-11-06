@@ -1,0 +1,8 @@
+﻿@await Html.PartialAsync("~/Views/Shared/_Post.cshtml", (Post)ViewBag.post)
+
+<h2>Comments</h2>
+
+@foreach (var comment in ViewBag.post.Comments)
+{
+    @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", (Comment)comment)
+}

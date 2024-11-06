@@ -1,0 +1,11 @@
+﻿
+@await Html.PartialAsync("~/Views/Shared/_Search.cshtml", "")
+
+<h1>
+    @ViewBag.userProfile.name
+</h1>
+
+@foreach (Post post in ViewBag.posts)
+{
+    @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+}
