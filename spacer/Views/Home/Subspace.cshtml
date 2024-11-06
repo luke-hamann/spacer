@@ -1,0 +1,15 @@
+﻿@model List<Post>
+@{
+    ViewData["Title"] = ViewBag.subspace.name;
+}
+
+@await Html.PartialAsync("~/Views/Shared/_Search.cshtml", "")
+
+<h1>
+    @ViewBag.subspace.name
+</h1>
+
+@foreach (var post in Model)
+{
+    @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+}

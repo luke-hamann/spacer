@@ -1,0 +1,25 @@
+﻿@model Post
+@{
+    ViewData["Title"] = "New Post";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Home" asp-action="NewPost" method="post">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label asp-for="title">Title</label>
+        <input asp-for="title" />
+    </div>
+    <div>
+        <label asp-for="content">Content</label>
+        <textarea asp-for="content"></textarea>
+    </div>
+    <div>
+        <select asp-for="forumId">
+        </select>
+    </div>
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
+</form>
