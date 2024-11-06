@@ -30,7 +30,7 @@ namespace spacer.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.user = GetCurrentUser();
+            ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
             var posts = _context.Posts
@@ -45,7 +45,7 @@ namespace spacer.Controllers
         [Route("/subspace/{id}/")]
         public IActionResult Subspace(int id)
         {
-            ViewBag.user = GetCurrentUser();
+            ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
             ViewBag.subspace = _context.Subspaces.Find(id);
 
@@ -70,9 +70,9 @@ namespace spacer.Controllers
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            ViewBag.userProfile = _context.Users.Find(id);
+            ViewBag.currentUserProfile = _context.Users.Find(id);
 
-            if (ViewBag.userProfile == null)
+            if (ViewBag.currentUserProfile == null)
             {
                 return NotFound();
             }

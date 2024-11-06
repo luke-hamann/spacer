@@ -11,60 +11,62 @@
 </head>
 <body class="container mt-4 bg-dark text-light rounded">
     <header>
-    <nav class="navbar navbar-expand-lg navbar-dark mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                Home
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <form class="d-flex" role="search" asp-action="Search" method="get">
-                        <select name="subspaceId">
-                            <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
-                                (all)
-                            </!option>
-                            @foreach (Subspace subspace in ViewBag.popularSubspaces)
-                            {
-                                <!option value="@subspace.id" @(ViewBag.searchSubspaceId == subspace.id ? "selected" : "") >
-                                    @subspace.name
+        <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    Home
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <form class="d-flex" role="search" asp-controller="Home" asp-action="Search" method="get">
+                            <select name="subspaceId">
+                                <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
+                                    (all)
                                 </!option>
-                            }
-                        </select>
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="@ViewBag.searchQuery">
-                        <button class="btn btn-outline-success" type="submit">
-                            Search
-                        </button>
-                    </form>
-                    @if (ViewBag.currentUser == null)
-                    {
-                        <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login">
-                            Login
-                        </a>
-                        <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Register">
-                            Register
-                        </a>
-                    }
-                    else
-                    {
-                        <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
-                            <input type="submit" value="Logout" class="btn" />
+                                @foreach (Subspace subspace in ViewBag.popularSubspaces)
+                                {
+                                    <!option value="@subspace.id" @(ViewBag.searchSubspaceId == subspace.id ? "selected" : "") >
+                                        @subspace.name
+                                    </!option>
+                                }
+                            </select>
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="@ViewBag.searchQuery">
+                            <button class="btn btn-outline-success" type="submit">
+                                Search
+                            </button>
                         </form>
+                        @if (ViewBag.currentUser == null)
+                        {
+                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login">
+                                Login
+                            </a>
+                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Register">
+                                Register
+                            </a>
                         }
+                        else
+                        {
+                            <span class="nav-link">Logged in as @ViewBag.currentUser.name</span>
+                            <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
+                                <button type="submit" class="btn btn-danger">
+                                    Logout
+                                </button>
+                            </form>
+                        }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
-
+        </nav>
     </header>
     <main class="container">
         @RenderBody()
     </main>
-    <footer>
-
+    <footer class="p-2 pt-5 pb-5">
+        &copy; 2024 Yasin, Rohan, &amp; Luke
     </footer>
 </body>
 </html>

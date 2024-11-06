@@ -3,9 +3,19 @@
     ViewData["Title"] = ViewBag.subspace.name;
 }
 
-<h1>
-    @ViewBag.subspace.name
-</h1>
+<div class="d-flex justify-content-between">
+    <h1>
+        @ViewBag.subspace.name
+    </h1>
+    @if (ViewBag.currentUser != null)
+    {
+        <div class="d-flex align-items-center">
+            <a asp-controller="Post" asp-action="New" class="btn btn-primary">
+                &plus; New Post
+            </a>
+        </div>
+    }
+</div>
 
 @foreach (var post in Model)
 {
