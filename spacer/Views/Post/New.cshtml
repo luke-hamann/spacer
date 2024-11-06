@@ -8,18 +8,29 @@
 <form asp-controller="Post" asp-action="New" method="post">
     <div asp-validation-summary="All"></div>
     <div>
-        <label asp-for="title">Title</label>
-        <input asp-for="title" />
-    </div>
-    <div>
-        <label asp-for="content">Content</label>
-        <textarea asp-for="content"></textarea>
-    </div>
-    <div>
-        <select asp-for="forumId">
+        <label asp-for="forumId">
+            Subspace
+        </label>
+        <select asp-for="forumId" class="form-control">
+            @foreach (Subspace subspace in ViewBag.popularSubspaces)
+            {
+                <option value="@subspace.id">@subspace.name</option>
+            }
         </select>
     </div>
     <div>
-        <input type="submit" value="Submit" />
+        <label asp-for="title">
+            Title
+        </label>
+        <input asp-for="title" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="content">
+            Content
+        </label>
+        <textarea asp-for="content" class="form-control"></textarea>
+    </div>
+    <div>
+        <input type="submit" value="Submit" class="btn btn-primary" />
     </div>
 </form>

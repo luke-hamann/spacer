@@ -1,5 +1,9 @@
 ﻿@model List<Post>
 
+<h1>
+    Search for "@ViewBag.searchQuery"
+</h1>
+
 <div>
     @Model.Count post@(Model.Count == 1 ? "" : "s")
 </div>

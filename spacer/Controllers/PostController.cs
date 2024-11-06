@@ -57,17 +57,23 @@ namespace spacer.Controllers
 
         [HttpGet]
         [Route("/new/")]
-        public IActionResult New()
+        public IActionResult New(int subspaceId = 0)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            if (ViewBag.user == null)
+            if (ViewBag.currentUser == null)
             {
                 return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login" });
             }
 
             var post = new Post();
+
+            if (subspaceId > 0)
+            {
+                post.forumId = subspaceId;
+            }
+
             return View(post);
         }
 
@@ -79,6 +85,11 @@ namespace spacer.Controllers
             if (currentUser == null)
             {
                 return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login" });
+            }
+
+            if (content == null || content == "")
+            {
+                return RedirectToAction("Index", "Post", new { id = postId });
             }
 
             var comment = new Comment
@@ -93,7 +104,6 @@ namespace spacer.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Post", new { id = postId });
-            
         }
     }
 }
