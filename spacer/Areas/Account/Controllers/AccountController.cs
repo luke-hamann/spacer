@@ -126,5 +126,7 @@ namespace spacer.Areas.Account.Controllers
             HttpContext.Session.SetInt32("userId", user.id);
             return RedirectToAction("Index", "Home");
         }
+
+
     }
 }
