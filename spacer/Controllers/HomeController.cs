@@ -42,22 +42,24 @@ namespace spacer.Controllers
         }
 
         [HttpGet]
-        [Route("/subspace/{id}/")]
-        public IActionResult Subspace(int id)
+        [Route("/s/{name}/")]
+        public IActionResult Subspace(string name)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
-            ViewBag.subspace = _context.Subspaces.Find(id);
+            ViewBag.subspace = _context.Subspaces.Where(s => s.name == name).FirstOrDefault();
 
             if (ViewBag.subspace == null)
             {
                 return NotFound();
             }
 
+            int id = ViewBag.subspace.id;
+
             List<Post> posts = _context.Posts
                 .Include(p => p.User)
                 .Include(p => p.Subspace)
-                .Where(p => p.forumId == id)
+                .Where(p => p.Subspace.id == id)
                 .OrderByDescending(p => p.creationDate)
                 .ToList();
 

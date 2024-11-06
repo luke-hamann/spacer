@@ -17,7 +17,10 @@
     }
 </div>
 
-@foreach (var post in Model)
-{
-    @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
-}
+<div class="row container row-gap-3">
+    @foreach (var post in Model)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+    }
+</div>
+
