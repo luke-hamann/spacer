@@ -1,3 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Spacer";
 }
+@model List<Post>
+
+@foreach(Post p in Model)
+{
+    <div>
+        <p> @p.Subspace </p>
+        <p> @p.content </p>
+        <p> @p.creationDate </p>
+        @foreach (Comment c in p.Comments)
+        {
+        <p>
+        @c.content
+        </p>
+        }
+    </div>
+}

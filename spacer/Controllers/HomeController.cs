@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using spacer.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace spacer.Controllers
 {
@@ -15,8 +17,16 @@ namespace spacer.Controllers
         public IActionResult Index()
         {
             ViewBag.user = _context.Users.Find(HttpContext.Session.GetInt32("userId"));
-
-            return View();
+            var posts = _context.Posts.Include(p => p.Comments).OrderBy(s => s.creationDate).ToList();
+            return View(posts);
         }
+
+        public IActionResult Search()
+        {
+
+            return View("SearchPage");
+
+        }
+
     }
 }
