@@ -3,28 +3,39 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>
-    Register
-</h1>
-<form asp-area="Account" asp-controller="Account" asp-action="Register" method="post">
-    <div asp-validation-summary="All"></div>
-    <div>
-        <label asp-for="name">Name</label>
-        <input asp-for="name" />
-    </div>
-    <div>
-        <label asp-for="email">Email</label>
-        <input asp-for="email" />
-    </div>
-    <div>
-        <label asp-for="password">Password</label>
-        <input type="password" asp-for="password" />
-    </div>
-    <div>
-        <label asp-for="passwordConfirm">Confirm Password</label>
-        <input type="password" asp-for="passwordConfirm" />
-    </div>
-    <div>
-        <input type="submit" value="Submit" />
-    </div>
-</form>
+<div class="d-flex justify-content-center">
+    <form asp-area="Account" asp-controller="Account" asp-action="Register" method="post" class="form-horizontal col-lg-4">
+        <h1>
+            @ViewData["Title"]
+        </h1>
+        <div asp-validation-summary="All"></div>
+        <div class="row">
+            <label asp-for="name" class="col">
+                Name
+            </label>
+            <input asp-for="name" class="col form-control" />
+        </div>
+        <div class="row mt-2">
+            <label asp-for="email" class="col">
+                Email
+            </label>
+            <input asp-for="email" class="col form-control" />
+        </div>
+        <div class="row mt-2">
+            <label asp-for="password" class="col">
+                Password
+            </label>
+            <input type="password" asp-for="password" class="col form-control" />
+        </div>
+        <div class="row mt-2">
+            <label asp-for="passwordConfirm" class="col">
+                Confirm Password
+            </label>
+            <input type="password" asp-for="passwordConfirm" class="col form-control" />
+        </div>
+        <div class="mt-5 d-flex justify-content-center">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+

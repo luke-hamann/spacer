@@ -1,5 +1,9 @@
 ﻿@model List<Post>
 
+<div>
+    @Model.Count post@(Model.Count == 1 ? "" : "s")
+</div>
+
 @foreach (var post in Model)
 {
     @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
