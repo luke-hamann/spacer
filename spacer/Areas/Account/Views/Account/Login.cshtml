@@ -2,20 +2,26 @@
 @{
     ViewData["Title"] = "Login";
 }
-<h1>
-    Login
-</h1>
-<form asp-action="Login" method="post">
-    <div asp-validation-summary="All"></div>
-    <div>
-        <label asp-for="Identity">Username/Email</label>
-        <input type="text" asp-for="Identity" />
-    </div>
-    <div>
-        <label asp-for="Password">Password</label>
-        <input type="password" asp-for="Password" />
-    </div>
-    <div>
-        <input type="submit" value="Login" />
-    </div>
-</form>
+<div class="d-flex justify-content-center">
+    <form asp-action="Login" method="post" class="form-horizontal col-lg-4">
+        <h1>
+            @ViewData["Title"]
+        </h1>
+        <div asp-validation-summary="All"></div>
+        <div class="row">
+            <label asp-for="Identity" class="col-sm col-form-label">
+                Username/Email
+            </label>
+            <input type="text" asp-for="Identity" class="col-sm  form-control" />
+        </div>
+        <div class="row mt-2">
+            <label asp-for="Password" class="col-sm col-form-label">
+                Password
+            </label>
+            <input type="password" asp-for="Password" class="col-sm form-control" />
+        </div>
+        <div class="mt-5 d-flex justify-content-center">
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
