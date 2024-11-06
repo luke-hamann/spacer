@@ -17,6 +17,10 @@ namespace spacer.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.popularSubspaces = _context.Subspaces
+    .Include(s => s.posts)
+    .OrderBy(s => s.posts.Count())
+    .ToList();
             ViewBag.user = _context.Users.Find(HttpContext.Session.GetInt32("userId"));
             var posts = _context.Posts.Include(p => p.Comments).OrderBy(s => s.creationDate).ToList();
             return View(posts);
@@ -28,7 +32,7 @@ namespace spacer.Controllers
                 .Include(s => s.posts)
                 .OrderBy(s => s.posts.Count())
                 .ToList();
-
+            
             return View();
         }
 
