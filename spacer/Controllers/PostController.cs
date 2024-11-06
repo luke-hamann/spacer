@@ -19,19 +19,29 @@ namespace spacer.Controllers
             return _context.Users.Find(HttpContext.Session.GetInt32("userId"));
         }
 
+        [NonAction]
+        private List<Subspace> GetPopularSubspaces()
+        {
+            return _context.Subspaces
+                .Include(s => s.posts)
+                .OrderBy(s => s.posts.Count())
+                .ToList();
+        }
+
         [HttpGet]
         [Route("/post/{id}/")]
         public IActionResult Index(int id)
         {
             ViewBag.currentUser = GetCurrentUser();
+            ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            ViewBag.post = _context.Posts
+            Post? post = _context.Posts
                 .Include(p => p.User)
                 .Include(p => p.Subspace)
                 .Where(p => p.id == id)
                 .FirstOrDefault();
 
-            if (ViewBag.post == null)
+            if (post == null)
             {
                 return NotFound();
             }
@@ -42,14 +52,15 @@ namespace spacer.Controllers
                 .OrderBy(c => c.creationDate)
                 .ToList();
 
-            return View();
+            return View(post);
         }
 
         [HttpGet]
         [Route("/new/")]
         public IActionResult New()
         {
-            ViewBag.user = GetCurrentUser();
+            ViewBag.currentUser = GetCurrentUser();
+            ViewBag.popularSubspaces = GetPopularSubspaces();
 
             if (ViewBag.user == null)
             {
@@ -58,6 +69,31 @@ namespace spacer.Controllers
 
             var post = new Post();
             return View(post);
+        }
+
+        [HttpPost]
+        public IActionResult Comment(int postId, string content)
+        {
+            User? currentUser = GetCurrentUser();
+
+            if (currentUser == null)
+            {
+                return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login" });
+            }
+
+            var comment = new Comment
+            {
+                userId = currentUser.id,
+                postId = postId,
+                content = content,
+                creationDate = DateTime.Now
+            };
+
+            _context.Add(comment);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Post", new { id = postId });
+            
         }
     }
 }

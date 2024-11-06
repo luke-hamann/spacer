@@ -1,8 +1,24 @@
-﻿@await Html.PartialAsync("~/Views/Shared/_Post.cshtml", (Post)ViewBag.post)
+﻿@model Post
+
+@await Html.PartialAsync("~/Views/Shared/_Post.cshtml", Model)
 
 <h2>Comments</h2>
 
-@foreach (var comment in ViewBag.post.Comments)
+@if (ViewBag.currentUser != null)
+{
+    <form asp-controller="Post" asp-action="Comment" method="post">
+        <input type="hidden" name="postId" value="@Model.id" />
+        <div>
+            <label for="content">Comment</label>
+            <textarea name="content" id="content"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+    </form>
+}
+
+@foreach (var comment in ViewBag.comments)
 {
     @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", (Comment)comment)
 }

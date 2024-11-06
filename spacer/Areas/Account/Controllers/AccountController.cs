@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using spacer.Areas.Account.Models;
 using spacer.Models;
 
@@ -20,13 +21,23 @@ namespace spacer.Areas.Account.Controllers
             return _context.Users.Find(HttpContext.Session.GetInt32("userId"));
         }
 
+        [NonAction]
+        private List<Subspace> GetPopularSubspaces()
+        {
+            return _context.Subspaces
+                .Include(s => s.posts)
+                .OrderBy(s => s.posts.Count())
+                .ToList();
+        }
+
         [HttpGet]
         [Route("Login")]
         public IActionResult Login()
         {
-            User? user = GetCurrentUser();
+            ViewBag.currentUser = GetCurrentUser();
+            ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            if (user == null)
+            if (ViewBag.currentUser == null)
             {
                 return View();
             }
@@ -40,7 +51,10 @@ namespace spacer.Areas.Account.Controllers
         [Route("Login")]
         public IActionResult Login(LoginForm loginForm)
         {
-            if (GetCurrentUser() != null)
+            ViewBag.currentUser = GetCurrentUser();
+            ViewBag.popularSubspaces = GetPopularSubspaces();
+
+            if (ViewBag.currentUser != null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -79,7 +93,10 @@ namespace spacer.Areas.Account.Controllers
         [Route("Register")]
         public IActionResult Register()
         {
-            if (GetCurrentUser() != null)
+            ViewBag.currentUser = GetCurrentUser();
+            ViewBag.popularSubspaces = GetPopularSubspaces();
+
+            if (ViewBag.currentUser != null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -91,7 +108,10 @@ namespace spacer.Areas.Account.Controllers
         [Route("Register")]
         public IActionResult Register(RegisterForm registerForm)
         {
-            if (GetCurrentUser() != null)
+            ViewBag.currentUser = GetCurrentUser();
+            ViewBag.popularSubspaces = GetPopularSubspaces();
+
+            if (ViewBag.currentUser != null)
             {
                 return RedirectToAction("Index", "Home");
             }
