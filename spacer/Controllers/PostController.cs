@@ -13,11 +13,17 @@ namespace spacer.Controllers
             _context = context;
         }
 
+        [NonAction]
+        private User? GetCurrentUser()
+        {
+            return _context.Users.Find(HttpContext.Session.GetInt32("userId"));
+        }
+
         [HttpGet]
         [Route("/post/{id}/")]
         public IActionResult Index(int id)
         {
-            ViewBag.user = _context.Users.Find(HttpContext.Session.GetInt32("userId"));
+            ViewBag.currentUser = GetCurrentUser();
 
             ViewBag.post = _context.Posts
                 .Include(p => p.User)
@@ -43,7 +49,7 @@ namespace spacer.Controllers
         [Route("/new/")]
         public IActionResult New()
         {
-            ViewBag.user = _context.Users.Find(HttpContext.Session.GetInt32("userId"));
+            ViewBag.user = GetCurrentUser();
 
             if (ViewBag.user == null)
             {

@@ -1,7 +1,5 @@
 ﻿@model List<Post>
 
-@await Html.PartialAsync("~/Views/Shared/_Search.cshtml", (string)ViewBag.query)
-
 @foreach (var post in Model)
 {
     @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
