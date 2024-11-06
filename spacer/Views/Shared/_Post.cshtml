@@ -1,25 +1,24 @@
 ﻿@model Post
 
-<div>
-    <div>
-        <a asp-controller="Post" asp-action="Index" asp-route-id="@Model.id">
-            @Model.title
+<div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+
+       <a asp-controller="Post" asp-action="Index" asp-route-id="@Model.id" class="Title">
+                @Model.title
         </a>
-    </div>
-    <div>
+
         <a asp-controller="Home" asp-action="Subspace" asp-route-id="@Model.forumId">
             @Model.Subspace.name
         </a>
-    </div>
-    <div>
+    <p>
         @Model.creationDate
-    </div>
-    <div>
+    </p>
+
         <a asp-controller="Home" asp-action="User" asp-route-id="@Model.User.id">
             @Model.User.name
         </a>
-    </div>
-    <div>
-        @Model.content
-    </div>
+
+        <p class="lead">
+            @Model.content
+        </p>
+
 </div>
