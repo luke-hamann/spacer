@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/js/bootstrap.min.js" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body class="container mt-4 bg-dark text-light rounded">
     <header>
-   <nav class="navbar navbar-expand-lg navbar-dark mb-3">
+    <nav class="navbar navbar-expand-lg navbar-dark mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                 Home
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
@@ -36,29 +37,29 @@
                             Search
                         </button>
                     </form>
-                     @if (ViewBag.currentUser == null)
-                        {
-                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login">
-                                Login
-                            </a>
-                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Register">
+                    @if (ViewBag.currentUser == null)
+                    {
+                        <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login">
+                            Login
+                        </a>
+                        <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Register">
                             Register
-                            </a>
+                        </a>
+                    }
+                    else
+                    {
+                        <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
+                            <input type="submit" value="Logout" class="btn" />
+                        </form>
                         }
-                        else
-                        {
-                                 <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
-                                <input type="submit" value="Logout" />
-                            </form>
-                        }
-
                     </div>
+                </div>
             </div>
         </div>
     </nav>
 
     </header>
-    <main>
+    <main class="container">
         @RenderBody()
     </main>
     <footer>
