@@ -12,8 +12,8 @@ using spacer.Models;
 namespace spacer.Migrations
 {
     [DbContext(typeof(SpacerContext))]
-    [Migration("20241104210203_sampleData")]
-    partial class sampleData
+    [Migration("20241106201617_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

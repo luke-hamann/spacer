@@ -15,13 +15,13 @@
         @foreach (var subspace in ViewBag.popularSubspaces)
         {
             <li>
-                <a asp-controller="Home" asp-action="Subspace" asp-route-id="@subspace.id">@subspace.name</a>
+                <a asp-controller="Home" asp-action="Subspace" asp-route-name="@subspace.name">@subspace.name</a>
             </li>
         }
     </ul>
 </div>
 
-<div>
+<div class="row container row-gap-3">
     @foreach (Post post in Model)
     {
         @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
