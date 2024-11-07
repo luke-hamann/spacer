@@ -40,19 +40,19 @@
                         </form>
                         @if (ViewBag.currentUser == null)
                         {
-                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login">
+                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login" asp-route-returnTo="@Context.Request.Path">
                                 Login
                             </a>
-                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Register">
+                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Register" asp-route-returnTo="@Context.Request.Path">
                                 Register
                             </a>
                         }
                         else
                         {
-                            <a asp-controller="Home" asp-action="User" asp-route-id="@ViewBag.currentUser.id" class="nav-link">
+                            <a asp-controller="Home" asp-action="User" asp-route-name="@ViewBag.currentUser.name" class="nav-link">
                                 Logged in as @ViewBag.currentUser.name
                             </a>
-                            <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
+                            <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" asp-route-returnTo="@Context.Request.Path" method="post">
                                 <button type="submit" class="btn btn-danger">
                                     Logout
                                 </button>

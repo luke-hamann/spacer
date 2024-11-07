@@ -9,6 +9,7 @@
             @ViewData["Title"]
         </h1>
         <div asp-validation-summary="All"></div>
+        <input type="hidden" asp-for="returnTo" />
         <div class="row">
             <label asp-for="name" class="col">
                 Name
@@ -34,8 +35,7 @@
             <input type="password" asp-for="passwordConfirm" class="col form-control" />
         </div>
         <div class="mt-5 d-flex justify-content-center">
-            <input type="submit" value="Submit" class="btn btn-primary" />
+            <input type="submit" value="Register" class="btn btn-primary" />
         </div>
     </form>
 </div>
-

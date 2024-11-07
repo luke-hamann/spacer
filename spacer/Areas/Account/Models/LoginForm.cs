@@ -5,9 +5,12 @@ namespace spacer.Areas.Account.Models
     public class LoginForm
     {
         [Required]
-        public string? Identity { get; set; }
+        public string? identity { get; set; }
 
         [Required]
-        public string? Password { get; set; }
+        public string? password { get; set; }
+
+        [Required]
+        public string? returnTo { get; set; } = "/";
     }
 }

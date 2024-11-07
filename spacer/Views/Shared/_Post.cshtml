@@ -1,13 +1,13 @@
 ﻿@model Post
 <div class="row container p-0 align-items-center rounded-3 row-gap-3 shadow-lg">
     <div class="col-1 post-user align-items-center rounded-end-3  ">
-        <a asp-controller="Home" asp-action="User" asp-route-id="@Model.User.id" class="post-user-text text-uppercase">
-        @Model.User.name
+        <a asp-controller="Home" asp-action="User" asp-route-name="@Model.User.name" class="post-user-text text-uppercase">
+            @Model.User.name
         </a>
     </div>
     <div class="col ">
 
-        <a asp-controller="Post" asp-action="Index" asp-route-id="@Model.id" class="Title text-uppercase">
+        <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.Subspace.name" asp-route-id="@Model.id" class="Title text-uppercase">
             @Model.title
         </a>
 
@@ -19,9 +19,8 @@
             @Model.creationDate
         </p>
 
-        <p class="lead">
-            @Model.content
-        </p>
+        <p class="lead">@Model.content</p>
+
     </div>
 
 </div>

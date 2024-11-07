@@ -29,7 +29,7 @@ namespace spacer.Controllers
         }
 
         [HttpGet]
-        [Route("/post/{id}/")]
+        [Route("s/{subspaceName}/post/{id}")]
         public IActionResult Index(int id)
         {
             ViewBag.currentUser = GetCurrentUser();
@@ -56,15 +56,15 @@ namespace spacer.Controllers
         }
 
         [HttpGet]
-        [Route("/new/")]
-        public IActionResult New(int subspaceId = 0)
+        [Route("add")]
+        public IActionResult Add(int subspaceId = 0)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
             if (ViewBag.currentUser == null)
             {
-                return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login" });
+                return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login", returnTo = "/add" });
             }
 
             var post = new Post();
@@ -78,12 +78,24 @@ namespace spacer.Controllers
         }
 
         [HttpPost]
-        [Route("/new/")]
-        public IActionResult New(Post post)
+        [Route("add")]
+        public IActionResult Add(Post post)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
-            
+
+            if (ViewBag.currentUser == null)
+            {
+                return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login" , returnTo = "/add" });
+            }
+
+            Subspace? subspace = _context.Subspaces.Find(post.forumId);
+
+            if (subspace == null)
+            {
+                ModelState.AddModelError("", "That subspace does not exist.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(post);
@@ -94,24 +106,38 @@ namespace spacer.Controllers
             _context.Add(post);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Post", new { post.id });
+            return RedirectToAction("Index", "Post", new { post.id, name = subspace!.name });
         }
 
         [HttpPost]
         public IActionResult Comment(int postId, string content)
         {
+            // Verify the user is logged in
             User? currentUser = GetCurrentUser();
-
             if (currentUser == null)
             {
                 return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login" });
             }
 
-            if (content == null || content == "")
+            // Ensure the post exists
+            Post? post = _context.Posts
+                .Include(p => p.Subspace)
+                .Where(p => p.id == postId)
+                .FirstOrDefault();
+
+            if (post == null)
             {
-                return RedirectToAction("Index", "Post", new { id = postId });
+                return RedirectToAction("Index", "Home");
             }
 
+
+            // Ensure content was submitted
+            if (content == null || content == "")
+            {
+                return RedirectToAction("Index", "Post", new { post.id, subspaceName = post.Subspace!.name });
+            }
+
+            // Save the comment
             var comment = new Comment
             {
                 userId = currentUser.id,
@@ -123,7 +149,7 @@ namespace spacer.Controllers
             _context.Add(comment);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Post", new { id = postId });
+            return RedirectToAction("Index", "Post", new { post.id, subspaceName = post.Subspace!.name });
         }
     }
 }

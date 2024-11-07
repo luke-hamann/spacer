@@ -10,7 +10,7 @@
     @if (ViewBag.currentUser != null)
     {
         <div class="d-flex align-items-center">
-            <a asp-controller="Post" asp-action="New" asp-route-subspaceId="@ViewBag.subspace.id" class="btn btn-primary">
+            <a asp-controller="Post" asp-action="Add" asp-route-subspaceId="@ViewBag.subspace.id" class="btn btn-primary">
                 &plus; New Post
             </a>
         </div>
@@ -18,10 +18,10 @@
 </div>
 
 <div>
-    <a asp-route-mode="oldest" class="btn btn-light">
+    <a asp-route-sort="oldest" class="btn btn-light">
         Oldest
     </a>
-    <a asp-route-mode="newest" class="btn btn-light">
+    <a asp-route-sort="newest" class="btn btn-light">
         Newest
     </a>
 </div>

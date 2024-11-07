@@ -17,6 +17,10 @@
 
 <h2>Comments</h2>
 
+<div>
+    @ViewBag.comments.Count comment@(ViewBag.comments.Count == 1 ? "" : "s")
+</div>
+
 @foreach (var comment in ViewBag.comments)
 {
     @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", (Comment)comment)
