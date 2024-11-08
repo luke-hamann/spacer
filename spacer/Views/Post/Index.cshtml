@@ -1,27 +1,39 @@
 ﻿@model Post
+@{
+    ViewData["Title"] = Model.title;
+}
 
 @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", Model)
 
 @if (ViewBag.currentUser != null)
 {
-    <form asp-controller="Post" asp-action="Comment" method="post">
-        <input type="hidden" name="postId" value="@Model.id" />
-        <div>
-            <textarea name="content" id="content" class="form-control"></textarea>
-        </div>
-        <div>
-            <input type="submit" value="Add Comment" />
-        </div>
-    </form>
+    <div class="mt-3">
+        <form asp-controller="Post" asp-action="Comment" method="post">
+            <input type="hidden" name="postId" value="@Model.id" />
+            <div>
+                <textarea name="content" rows="3" class="form-control"></textarea>
+            </div>
+            <div class="mt-3">
+                <input type="submit" value="Add Comment" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 }
 
-<h2>Comments</h2>
+<h2 class="mt-3">
+    Comments
+</h2>
 
 <div>
     @ViewBag.comments.Count comment@(ViewBag.comments.Count == 1 ? "" : "s")
 </div>
 
-@foreach (var comment in ViewBag.comments)
+@if (ViewBag.comments.Count > 0)
 {
-    @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", (Comment)comment)
+    <div class="container row row-gap-3 mt-3">
+        @foreach (var comment in ViewBag.comments)
+        {
+            @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", (Comment)comment)
+        }
+    </div>
 }

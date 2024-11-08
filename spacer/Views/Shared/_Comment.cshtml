@@ -1,15 +1,16 @@
 ﻿@model Comment
 
-<div>
-    <div>
-        <a asp-controller="Home" asp-action="User" asp-route-name="@Model.User.name">
+<div class="row p-0 align-items-stretch rounded-3 row-gap-3 shadow-lg">
+    <div class="col-1 post-user rounded-end-3">
+        <a asp-controller="Home" asp-action="User" asp-route-name="@Model.User.name" class="post-user-text text-uppercase">
             @Model.User.name
         </a>
     </div>
-    <div>
-        @Model.creationDate
-    </div>
-    <div>
-        @Model.content
+    <div class="col">
+        <p class="date mt-2">
+            @Model.creationDate
+        </p>
+
+        <p class="lead">@Model.content</p>
     </div>
 </div>
