@@ -106,7 +106,7 @@ namespace spacer.Controllers
             _context.Add(post);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Post", new { post.id, name = subspace!.name });
+            return RedirectToAction("Index", "Post", new { post.id, subspaceName = subspace!.name });
         }
 
         [HttpPost]
