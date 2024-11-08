@@ -9,7 +9,7 @@
     </h1>
     @if (ViewBag.currentUser != null)
     {
-        <div class="col-3 d-flex align-items-center">
+        <div class="col-md-3 d-flex align-items-center">
             <a asp-controller="Post" asp-action="Add" class="btn btn-primary">
                 &plus; New Post
             </a>
@@ -18,7 +18,7 @@
 </div>
 
 <div class="row">
-    <div class="col-9 row container row-gap-3">
+    <div class="col-md-9 row container row-gap-3">
         @foreach (Post post in Model)
         {
             @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
