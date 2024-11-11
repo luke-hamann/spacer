@@ -49,7 +49,7 @@ namespace spacer.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
 
                     b.HasData(
                         new
@@ -1685,7 +1685,7 @@ namespace spacer.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
 
                     b.HasData(
                         new
@@ -2154,7 +2154,7 @@ namespace spacer.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Subspaces");
+                    b.ToTable("Subspaces", (string)null);
 
                     b.HasData(
                         new
@@ -2201,7 +2201,7 @@ namespace spacer.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new

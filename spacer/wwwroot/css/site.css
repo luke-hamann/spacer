@@ -1,3 +1,7 @@
+.allButFooter {
+    min-height: calc(100vh - 7rem);
+}
+
 a.Title {
     font-size: 2rem;
     color: white;
@@ -56,4 +60,44 @@ a {
         margin: 0 auto;
         width: 40%;
     }
+}
+
+
+/* Login Form style */
+
+
+
+.rotated-text {
+    padding-inline: 10%;
+    width: 4rem;
+    background: rgb(26, 29, 33);
+    border-left: rgb(23, 26, 30) solid;
+    writing-mode: vertical-lr;
+    transform: scale(-1, -1);
+    text-align: center;
+    color: rgb(0, 255, 0);
+}
+
+    .rotated-text h1 {
+        margin: 0%;
+    }
+
+
+
+
+
+.navbar-search-form .input-group .form-select {
+    width: 2rem; /* Set the desired width */
+    max-width: 30%; /* Ensure it’s responsive */
+}
+
+
+/* footer styles*/
+
+.footer {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }

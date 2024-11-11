@@ -127,6 +127,7 @@ namespace spacer.Controllers
             ViewBag.searchQuery = query;
             ViewBag.searchSubspaceId = subspaceId;
 
+
             List<Post> posts = _context.Posts
                 .Include(p => p.User)
                 .Include(p => p.Subspace)

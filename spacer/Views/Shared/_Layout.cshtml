@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
-<body class="container mt-4 bg-dark text-light rounded">
+<body class="container mt-4 bg-dark text-light rounded ">
+        <div class="allButFooter">
+
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark mb-3">
             <div class="container-fluid">
@@ -22,22 +24,22 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    <form asp-controller="Home" asp-action="Search" method="get" role="search" class="d-flex navbar-search-form">
-                        <select name="subspaceId">
-                            <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
-                                (all)
-                            </!option>
-                            @foreach (Subspace subspace in ViewBag.popularSubspaces)
-                            {
-                                <!option value="@subspace.id" @(ViewBag.searchSubspaceId == subspace.id ? "selected" : "") >
-                                    @subspace.name
+                    <form asp-controller="Home" asp-action="Search" method="get" role="search" class="d-flex navbar-search-form" data-bs-theme="dark">
+                        <div class="input-group mb-3">
+                            <select class="form-select " name="subspaceId">
+                                <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
+                                    (all)
                                 </!option>
-                            }
-                        </select>
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="@ViewBag.searchQuery" autocomplete="off">
-                        <button class="btn btn-outline-success" type="submit">
-                            Search
-                        </button>
+                                    @foreach (Subspace subspace in ViewBag.popularSubspaces)
+                                    {
+                                        <!option value="@subspace.id" @(ViewBag.searchSubspaceId == subspace.id ? "selected" : "") >
+                                            @subspace.name
+                                        </!option>
+                                    }
+                            </select>
+                            <input type="search" class="form-control" placeholder="Search" aria-label="Text input with segmented dropdown button" name="query" value="@ViewBag.searchQuery" autocomplete="off">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </div>
                     </form>
                     <ul class="navbar-nav">
                         @if (ViewBag.currentUser == null)
@@ -76,7 +78,8 @@
     <main class="container">
         @RenderBody()
     </main>
-    <footer class="p-2 pt-5 pb-5">
+    </div>
+    <footer class="footer p-2 pt-5 pb-3">
         &copy; 2024 Yasin, Rohan, &amp; Luke
     </footer>
 </body>
