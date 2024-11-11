@@ -2,26 +2,37 @@
 @{
     ViewData["Title"] = "Login";
 }
-<div class="d-flex justify-content-center">
-    <form asp-action="Login" method="post" class="form-horizontal col-lg-4">
+<div class="container col-12 d-flex justify-content-center">
+    <div class="col-lg-6 row container p-0 align-items-center rounded-3 row-gap-3 shadow-lg">
+
+    <div class="col-1 FormTitle align-items-center rounded-end-3 h-100 ">
         <h1>
             @ViewData["Title"]
         </h1>
-        <div asp-validation-summary="All"></div>
-        <div class="row">
-            <label asp-for="Identity" class="col-sm col-form-label">
+    </div>
+
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="Login" method="post" class="form-horizontal col-lg-4" novalidate>
+
+        <div class="form-group"
+            <label asp-for="Identity">
                 Username/Email
             </label>
-            <input type="text" asp-for="Identity" class="col-sm  form-control" />
+            <input type="text" asp-for="Identity" class="form-control @(ViewData.ModelState["Identity"]?.Errors.Count > 0 ? "is-invalid" : "is-valid")" required/>
+            <span asp-validation-for="Identity" class="text-danger"></span>
         </div>
-        <div class="row mt-2">
-            <label asp-for="Password" class="col-sm col-form-label">
+
+        <div class="form-group"
+            <label asp-for="Password">
                 Password
             </label>
-            <input type="password" asp-for="Password" class="col-sm form-control" />
+            <input type="text" asp-for="Password" class="form-control @(ViewData.ModelState["Password"]?.Errors.Count > 0 ? "is-invalid" : "is-valid")" required/>
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <div class="mt-5 d-flex justify-content-center">
-            <input type="submit" value="Login" class="btn btn-primary" />
-        </div>
+        
+    <button type="submit" class="btn btn-primary mt-3">Save Product</button>
     </form>
+
+    </div>
 </div>
