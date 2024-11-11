@@ -4,10 +4,13 @@ namespace spacer.Areas.Account.Models
 {
     public class LoginForm
     {
-        [Required(ErrorMessage = "Please enter a Username/Email.")]
-        public string? Identity { get; set; }
+        [Required]
+        public string? identity { get; set; }
 
-        [Required(ErrorMessage = "Please enter a Password.")]
-        public string? Password { get; set; }
+        [Required]
+        public string? password { get; set; }
+
+        [Required]
+        public string? returnTo { get; set; } = "/";
     }
 }

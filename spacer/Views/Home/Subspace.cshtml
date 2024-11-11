@@ -10,17 +10,25 @@
     @if (ViewBag.currentUser != null)
     {
         <div class="d-flex align-items-center">
-            <a asp-controller="Post" asp-action="New" class="btn btn-primary">
+            <a asp-controller="Post" asp-action="Add" asp-route-subspaceId="@ViewBag.subspace.id" class="btn btn-primary">
                 &plus; New Post
             </a>
         </div>
     }
 </div>
 
-<div class="row container row-gap-3">
+<div class="mt-3">
+    <a asp-route-sort="oldest" class="btn btn-light">
+        Oldest
+    </a>
+    <a asp-route-sort="newest" class="btn btn-light">
+        Newest
+    </a>
+</div>
+
+<div class="row row-gap-3 mt-3">
     @foreach (var post in Model)
     {
         @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
     }
 </div>
-

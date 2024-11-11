@@ -25,24 +25,35 @@ a {
     background: rgb(61, 61, 61);
     writing-mode: vertical-lr;
     transform: scale(-1, -1);
+    text-align: center;
+    color: rgb(0, 255, 0);
 }
 
 .post-user-text {
 
     color: rgb(0, 255, 0);
+}    
+
+.lead {
+    white-space: pre-line;
 }
 
+/* Navbar */
 
-.FormTitle{
-    padding-inline: 5%;
-    background: rgb(61, 61, 61);
-    writing-mode: vertical-lr;
-    transform: scale(-1, -1);
-    color: rgb(0, 255, 0);
-   
+#navbarSupportedContent {
+    margin-top: 2rem;
 }
 
-.FormTitle h1 {
-    margin:0px;
-    padding:0pc;
+@media (min-width: 992px) {
+    #navbarSupportedContent {
+        margin-top: 0;
+    }
+
+    .navbar-search-form {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 40%;
+    }
 }

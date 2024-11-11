@@ -1,63 +1,74 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string returnToUrl = Context.Request.Path;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/js/bootstrap.min.js" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="container mt-4 bg-dark text-light rounded">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand">
                     Home
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <form class="d-flex" role="search" asp-controller="Home" asp-action="Search" method="get">
-                            <select name="subspaceId">
-                                <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
-                                    (all)
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <form asp-controller="Home" asp-action="Search" method="get" role="search" class="d-flex navbar-search-form">
+                        <select name="subspaceId">
+                            <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
+                                (all)
+                            </!option>
+                            @foreach (Subspace subspace in ViewBag.popularSubspaces)
+                            {
+                                <!option value="@subspace.id" @(ViewBag.searchSubspaceId == subspace.id ? "selected" : "") >
+                                    @subspace.name
                                 </!option>
-                                @foreach (Subspace subspace in ViewBag.popularSubspaces)
-                                {
-                                    <!option value="@subspace.id" @(ViewBag.searchSubspaceId == subspace.id ? "selected" : "") >
-                                        @subspace.name
-                                    </!option>
-                                }
-                            </select>
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="@ViewBag.searchQuery">
-                            <button class="btn btn-outline-success" type="submit">
-                                Search
-                            </button>
-                        </form>
+                            }
+                        </select>
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="@ViewBag.searchQuery" autocomplete="off">
+                        <button class="btn btn-outline-success" type="submit">
+                            Search
+                        </button>
+                    </form>
+                    <ul class="navbar-nav">
                         @if (ViewBag.currentUser == null)
                         {
-                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Login">
-                                Login
-                            </a>
-                            <a class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Register">
-                                Register
-                            </a>
+                            <li class="nav-item">
+                                <a asp-area="Account" asp-controller="Account" asp-action="Login" asp-route-returnTo="@returnToUrl" class="nav-link">
+                                    Login
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Account" asp-controller="Account" asp-action="Register" asp-route-returnTo="@returnToUrl" class="nav-link">
+                                    Register
+                                </a>
+                            </li>
                         }
                         else
                         {
-                            <span class="nav-link">Logged in as @ViewBag.currentUser.name</span>
-                            <form class="nav-link" asp-area="Account" asp-controller="Account" asp-action="Logout" method="post">
-                                <button type="submit" class="btn btn-danger">
-                                    Logout
-                                </button>
-                            </form>
+                            <li class="nav-item">
+                                <a asp-controller="Home" asp-action="User" asp-route-name="@ViewBag.currentUser.name" class="nav-link">
+                                    Logged in as @ViewBag.currentUser.name
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-area="Account" asp-controller="Account" asp-action="Logout" asp-route-returnTo="@returnToUrl" method="post" class="d-flex">
+                                    <button type="submit" class="btn btn-danger">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
                         }
-                        </div>
-                    </div>
+                    </ul>
                 </div>
             </div>
         </nav>

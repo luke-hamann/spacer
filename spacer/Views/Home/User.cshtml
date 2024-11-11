@@ -1,24 +1,18 @@
-﻿<h1>
-    @ViewBag.userProfile.name
+﻿@{
+    ViewData["Title"] = ViewBag.userProfile.name;
+}
+
+<h1>
+    @ViewData["Title"]
 </h1>
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-    <div class="container-fluid ">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between bg-dark">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="User" asp-route-section="posts">Posts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="User" asp-route-section="comments">Comments</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<nav class="d-flex mb-3 border-bottom box-shadow">
+    <a asp-controller="Home" asp-action="User" asp-route-section="posts" class="p-3 link-light">
+        Posts
+    </a>
+    <a asp-controller="Home" asp-action="User" asp-route-section="comments" class="p-3 link-light">
+        Comments
+    </a>
 </nav>
 
 

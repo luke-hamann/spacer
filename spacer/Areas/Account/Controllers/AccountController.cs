@@ -31,8 +31,8 @@ namespace spacer.Areas.Account.Controllers
         }
 
         [HttpGet]
-        [Route("Login")]
-        public IActionResult Login()
+        [Route("login")]
+        public IActionResult Login(string returnTo = "/")
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
@@ -43,12 +43,12 @@ namespace spacer.Areas.Account.Controllers
             }
             else
             {
-                return Redirect("/");
+                return Redirect(returnTo);
             }
         }
 
         [HttpPost]
-        [Route("Login")]
+        [Route("login")]
         public IActionResult Login(LoginForm loginForm)
         {
             ViewBag.currentUser = GetCurrentUser();
@@ -56,7 +56,7 @@ namespace spacer.Areas.Account.Controllers
 
             if (ViewBag.currentUser != null)
             {
-                return RedirectToAction("Index", "Home");
+                return Redirect(loginForm.returnTo!);
             }
 
             if (!ModelState.IsValid)
@@ -65,8 +65,8 @@ namespace spacer.Areas.Account.Controllers
             }
 
             User? user = _context.Users
-                .Where(u => u.name == loginForm.Identity || u.email == loginForm.Identity)
-                .Where(u => u.password == loginForm.Password)
+                .Where(u => u.name == loginForm.identity || u.email == loginForm.identity)
+                .Where(u => u.password == loginForm.password)
                 .FirstOrDefault();
 
             if (user == null)
@@ -74,38 +74,36 @@ namespace spacer.Areas.Account.Controllers
                 ModelState.AddModelError("", "Invalid credentials.");
                 return View(loginForm);
             }
-            else
-            {
-                HttpContext.Session.SetInt32("userId", user.id);
-                return RedirectToAction("Index", "Home");
-            }
+
+            HttpContext.Session.SetInt32("userId", user.id);
+            return Redirect(loginForm.returnTo!);
         }
 
         [HttpPost]
-        [Route("Logout")]
-        public IActionResult Logout()
+        [Route("logout")]
+        public IActionResult Logout(string returnTo = "/")
         {
             HttpContext.Session.SetInt32("userId", 0);
-            return RedirectToAction("Index", "Home");
+            return Redirect(returnTo);
         }
 
         [HttpGet]
-        [Route("Register")]
-        public IActionResult Register()
+        [Route("register")]
+        public IActionResult Register(string returnTo = "/")
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
             if (ViewBag.currentUser != null)
             {
-                return RedirectToAction("Index", "Home");
+                return Redirect(returnTo);
             }
 
             return View();
         }
 
         [HttpPost]
-        [Route("Register")]
+        [Route("register")]
         public IActionResult Register(RegisterForm registerForm)
         {
             ViewBag.currentUser = GetCurrentUser();
@@ -113,7 +111,7 @@ namespace spacer.Areas.Account.Controllers
 
             if (ViewBag.currentUser != null)
             {
-                return RedirectToAction("Index", "Home");
+                return Redirect(registerForm.returnTo!);
             }
 
             if (registerForm.password != registerForm.passwordConfirm)
@@ -138,15 +136,18 @@ namespace spacer.Areas.Account.Controllers
                 return View(registerForm);
             }
 
-            user = new User { name = registerForm.name, email = registerForm.email, password = registerForm.password };
+            user = new User
+            {
+                name = registerForm.name!,
+                email = registerForm.email!,
+                password = registerForm.password!
+            };
 
             _context.Users.Add(user);
             _context.SaveChanges();
 
             HttpContext.Session.SetInt32("userId", user.id);
-            return RedirectToAction("Index", "Home");
+            return Redirect(registerForm.returnTo!);
         }
-
-
     }
 }

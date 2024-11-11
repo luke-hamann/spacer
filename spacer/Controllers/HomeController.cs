@@ -28,6 +28,7 @@ namespace spacer.Controllers
                 .ToList();
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             ViewBag.currentUser = GetCurrentUser();
@@ -36,14 +37,15 @@ namespace spacer.Controllers
             var posts = _context.Posts
                 .Include(p => p.Subspace)
                 .Include(p => p.User)
-                .OrderBy(s => s.creationDate).ToList();
+                .OrderByDescending(s => s.creationDate)
+                .ToList();
 
             return View(posts);
         }
 
         [HttpGet]
-        [Route("/s/{name}/")]
-        public IActionResult Subspace(string name)
+        [Route("s/{name}")]
+        public IActionResult Subspace(string name, string sort = "newest")
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
@@ -55,61 +57,70 @@ namespace spacer.Controllers
             }
 
             int id = ViewBag.subspace.id;
+            ViewBag.searchSubspaceId = id;
 
-            List<Post> posts = _context.Posts
+            var query = _context.Posts
                 .Include(p => p.User)
                 .Include(p => p.Subspace)
-                .Where(p => p.Subspace.id == id)
-                .OrderByDescending(p => p.creationDate)
-                .ToList();
+                .Where(p => p.Subspace!.id == id);
+            
+            if (sort == "newest")
+            {
+                query = query.OrderByDescending(p => p.creationDate);
+            }
+            else
+            {
+                query = query.OrderBy(p => p.creationDate);
+            }
+
+            List<Post> posts = query.ToList();
 
             return View(posts);
         }
 
-  
-        public IActionResult User(int id, string section="posts")
+        [HttpGet]
+        [Route("u/{name}")]
+        public new IActionResult User(string name, string section = "posts")
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            ViewBag.currentUserProfile = _context.Users.Find(id);
+            ViewBag.userProfile = _context.Users.Where(u => u.name == name).FirstOrDefault();
 
-            if (ViewBag.currentUserProfile == null)
+            if (ViewBag.userProfile == null)
             {
                 return NotFound();
             }
+
+            int id = ViewBag.userProfile.id;
 
             if (section == "posts")
             {
                 ViewBag.selection = "posts";
 
                 ViewBag.content = _context.Posts
-                .Include(p => p.Subspace)
-                .Include(p => p.User)
-                .Where(p => p.userId == id)
-                .OrderBy(p => p.creationDate)
-                .ToList();
+                    .Include(p => p.Subspace)
+                    .Include(p => p.User)
+                    .Where(p => p.userId == id)
+                    .OrderBy(p => p.creationDate)
+                    .ToList();
             } else
             {
                 ViewBag.selection = "comments";
 
                 ViewBag.content = _context.Comments
-                .Include(p => p.Post)
-                .Include(p => p.User)
-                .Where(p => p.userId == id)
-                .ToList();
+                    .Include(p => p.Post)
+                    .Include(p => p.User)
+                    .Where(p => p.userId == id)
+                    .ToList();
             }
-
-  
 
             return View();
         }
 
         [HttpGet]
-        [Route("/search/")]
-        public IActionResult Search(
-            [FromQuery(Name = "q")] string query = "",
-            [FromQuery(Name = "subspaceId")] int subspaceId = 0)
+        [Route("search")]
+        public IActionResult Search(string query = "", int subspaceId = 0)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
@@ -119,8 +130,8 @@ namespace spacer.Controllers
             List<Post> posts = _context.Posts
                 .Include(p => p.User)
                 .Include(p => p.Subspace)
-                .Where(p => (p.title.Contains(query) || p.content.Contains(query)))
-                .Where(p => subspaceId == 0 || p.Subspace.id == subspaceId)
+                .Where(p => (query == "" || p.title.Contains(query) || p.content.Contains(query)))
+                .Where(p => subspaceId == 0 || p.Subspace!.id == subspaceId)
                 .ToList();
 
             return View(posts);

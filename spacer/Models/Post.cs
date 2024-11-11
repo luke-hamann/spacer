@@ -20,10 +20,10 @@ namespace spacer.Models
 
         public int forumId { get; set; }
 
-        public Subspace Subspace { get; set; } = null!;
+        public Subspace? Subspace { get; set; } = null!;
 
         public int userId { get; set; }
-        public User User { get; set; } = null!;
+        public User? User { get; set; } = null!;
 
         public ICollection<Comment> Comments { get; set; }
 
