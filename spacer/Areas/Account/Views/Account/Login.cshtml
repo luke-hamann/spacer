@@ -2,28 +2,24 @@
 @{
     ViewData["Title"] = "Login";
 }
-<div class="container col-8 d-flex justify-content-center">
-        
-    
-<form asp-action="Login" method="post" class="login-form row col-8 p-0 align-items-stretch rounded-3 shadow-lg " data-bs-theme="dark">
 
+<form asp-action="Login" method="post" class="login-form row p-0 align-items-stretch rounded-3 shadow-lg" data-bs-theme="dark">
     <div class="col-1 rotated-text rounded-end-3">
-        <h1 class="">
-        @ViewData["Title"]
+        <h1>
+            @ViewData["Title"]
         </h1>
     </div>
-<div class="col-8 m-auto my-5 align-items-center justify-content-center">
-        <div asp-validation-summary="All"></div>
+    <div class="col-8 m-auto my-5 align-items-center justify-content-center">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <input type="hidden" asp-for="returnTo" />
         <div class="form-floating row">
-            <input type="text" asp-for="identity" class="col-sm  form-control"  placeholder="name@example.com" />
+            <input type="text" asp-for="identity" class="col-sm form-control"  placeholder="name@example.com" />
             <label asp-for="identity" class="col-sm col-form-label">
                 Username/Email
             </label>
         </div>
         <div class="form-floating row mt-2">
             <input type="password" asp-for="password" class="col-sm form-control" placeholder="Password" aria-describedby="passwordHelpBlock"/>
-
             <label asp-for="password" class="col-sm col-form-label">
                 Password
             </label>
@@ -31,8 +27,5 @@
         <div class="row mt-5 d-flex justify-content-center">
             <input type="submit" value="Login" class="btn btn-primary" />
         </div>
-
     </div>
 </form>
-
-</div>

@@ -3,23 +3,20 @@
     ViewData["Title"] = "New Post";
 }
 
-<div class="d-flex justify-content-center">
-    <form asp-controller="Post" asp-action="Add" method="post" class="form-horizontal col-lg-6">
-        <input type="hidden" asp-for="userId" value="@ViewBag.currentUser.id" />
+<form asp-controller="Post" asp-action="Add" method="post" class="new-post-form row align-items-stretch rounded-3 shadow-lg" data-bs-theme="dark">
+    <div class="col-2 rotated-text rounded-end-3">
         <h1>
             @ViewData["Title"]
         </h1>
-        <div asp-validation-summary="All"></div>
+    </div>
+    <div class="col-10 my-5 mx-auto">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" asp-for="userId" value="@ViewBag.currentUser.id" />
         <div>
             <label asp-for="forumId" class="form-label">
                 Subspace
             </label>
-            <select asp-for="forumId" class="form-select">
-                @foreach (Subspace subspace in ViewBag.popularSubspaces)
-                {
-                    <option value="@subspace.id">@subspace.name</option>
-                }
-            </select>
+            <select asp-for="forumId" asp-items="@(new SelectList(ViewBag.popularSubspaces, "id", "name", Model.forumId))" class="form-select"></select>
         </div>
         <div class="mt-2">
             <label asp-for="title" class="form-label">
@@ -36,5 +33,5 @@
         <div class="mt-5 d-flex justify-content-center">
             <input type="submit" value="Submit" class="btn btn-primary" />
         </div>
-    </form>
-</div>
+    </div>
+</form>

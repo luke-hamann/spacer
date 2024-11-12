@@ -10,7 +10,8 @@ namespace spacer.Models
         public string content { get; set; }
         public DateTime creationDate { get; set; }
 
-        //Relationships
+        // Relationships
+
         public int userId { get; set; }
         public User? User { get; set; } = null!;
 

@@ -110,6 +110,7 @@ namespace spacer.Controllers
         }
 
         [HttpPost]
+        [Route("comment")]
         public IActionResult Comment(int postId, string content)
         {
             // Verify the user is logged in

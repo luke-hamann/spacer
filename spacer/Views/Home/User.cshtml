@@ -6,6 +6,15 @@
     @ViewData["Title"]
 </h1>
 
+@if (ViewBag.currentUser != null && ViewBag.userProfile.id == ViewBag.currentUser.id)
+{
+    <div>
+        <a asp-controller="Post" asp-action="Add" class="btn btn-primary">
+            &plus; Add Post
+        </a>
+    </div>
+}
+
 <nav class="d-flex mb-3 border-bottom box-shadow">
     <a asp-controller="Home" asp-action="User" asp-route-section="posts" class="p-3 link-light">
         Posts
@@ -14,7 +23,6 @@
         Comments
     </a>
 </nav>
-
 
 <div class="row container row-gap-3">
     @if (ViewBag.selection == "posts")
