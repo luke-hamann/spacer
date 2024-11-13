@@ -8,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="container bg-dark text-light rounded">
-    <header>
+    <header class="row">
         <nav class="navbar navbar-expand-lg navbar-dark mt-4 mb-3">
             <div class="container-fluid">
                 <a asp-controller="Home" asp-action="Index" class="navbar-brand">
@@ -22,7 +23,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    <form asp-controller="Home" asp-action="Search" method="get" role="search" class="d-flex navbar-search-form" data-bs-theme="dark">
+                    <form asp-controller="Home" asp-action="Search" method="get" role="search" class="d-flex bg-dark navbar-search-form" data-bs-theme="dark">
                         <div class="input-group">
                             <select class="form-select " name="subspaceId">
                                 <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
@@ -36,7 +37,7 @@
                                 }
                             </select>
                             <input type="search" class="form-control" placeholder="Search" aria-label="Text input with segmented dropdown button" name="query" value="@ViewBag.searchQuery" autocomplete="off">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <button class="btn btn-outline-success type="submit"><span class="bi bi-rocket"></span> Go </button>
                         </div>
                     </form>
                     <ul class="navbar-nav">
@@ -73,11 +74,15 @@
             </div>
         </nav>
     </header>
-    <main class="container">
+    <main class="container row ">
         @RenderBody()
     </main>
-    <footer class="footer p-2 pt-5 pb-3">
-        &copy; 2024 Yasin, Rohan, &amp; Luke
-    </footer>
+    <div class="container row mt-3">
+        <div class="footer-container">
+            <div class="footer">
+                <div class="footer-text">&copy; 2024 Yasin, Rohan, &amp; Luke</div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

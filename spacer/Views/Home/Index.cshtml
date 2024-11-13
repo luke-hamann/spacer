@@ -4,6 +4,7 @@
 }
 
 <div class="row">
+    
     <h1 class="col-9">
         @ViewData["Title"]
     </h1>
@@ -18,25 +19,28 @@
 </div>
 
 <div class="row mt-3">
-    <div class="col-md-9 row container row-gap-3">
+    <div class="col-md-9 ms-2 row container row-gap-3">
         @foreach (Post post in Model)
         {
             @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
         }
     </div>
-    <div class="col-3">
-        <h2>
-            Popular Subspaces
-        </h2>
-        <ul>
-            @foreach (var subspace in ViewBag.popularSubspaces)
-            {
-                <li>
-                    <a asp-controller="Home" asp-action="Subspace" asp-route-name="@subspace.name">
-                        @subspace.name
-                    </a>
-                </li>
-            }
-        </ul>
+    <div class="col-3 container ">
+        <div class="Popular-Subspaces bg-dark">
+            <h2>
+                Popular Subspaces
+            </h2>
+            <ul>
+                @foreach (var subspace in ViewBag.popularSubspaces)
+                {
+                    <li>
+                        <a asp-controller="Home" asp-action="Subspace" asp-route-name="@subspace.name">
+                            @subspace.name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        
     </div>
 </div>
