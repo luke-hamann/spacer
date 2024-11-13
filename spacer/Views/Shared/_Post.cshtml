@@ -7,11 +7,11 @@
     </div>
     <div class="col ">
 
-        <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.Subspace.name" asp-route-id="@Model.id" class="Title text-uppercase">
+        <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.Subspace.name" asp-route-id="@Model.id" class="title text-uppercase">
             @Model.title
         </a>
 
-        <a class="Post-subspace" asp-controller="Home" asp-action="Subspace" asp-route-name="@Model.Subspace.name">
+        <a asp-controller="Home" asp-action="Subspace" asp-route-name="@Model.Subspace.name" class="post-subspace">
             @Model.Subspace.name
         </a>
 

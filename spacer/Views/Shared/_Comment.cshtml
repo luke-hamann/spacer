@@ -7,10 +7,11 @@
         </a>
     </div>
     <div class="col">
-        <p class="date mt-2">
-            @Model.creationDate
+        <p class="mt-2">
+            <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.Post.Subspace.name" asp-route-id="@Model.postId" class="date">
+                @Model.creationDate
+            </a>
         </p>
-
         <p class="lead">@Model.content</p>
     </div>
 </div>

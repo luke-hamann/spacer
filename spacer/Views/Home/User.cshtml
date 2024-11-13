@@ -12,6 +12,15 @@
     </div>
 </div>
 
+@if (ViewBag.currentUser != null && ViewBag.userProfile.id == ViewBag.currentUser.id)
+{
+    <div>
+        <a asp-controller="Post" asp-action="Add" class="btn btn-primary">
+            &plus; Add Post
+        </a>
+    </div>
+}
+
 <nav class="d-flex mb-3 border-bottom box-shadow">
     <a asp-controller="Home" asp-action="User" asp-route-section="posts" class="p-3 link-light @(ViewBag.selection == "posts" ? "text-primary" : "")">
         <i class="fas fa-pen"></i> Posts
