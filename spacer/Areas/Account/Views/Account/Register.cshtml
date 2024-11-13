@@ -2,42 +2,46 @@
 @{
     ViewData["Title"] = "Register";
 }
+<div>
 
-<form asp-area="Account" asp-controller="Account" asp-action="Register" method="post" class="register-form row p-0 align-items-stretch rounded-3 shadow-lg " data-bs-theme="dark">
-    <div class="col-1 rotated-text rounded-end-3">
-        <h1>
-            @ViewData["Title"]
-        </h1>
-    </div>
-    <div class="col-8 m-auto my-5 align-items-center justify-content-center">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <input type="hidden" asp-for="returnTo" />
-        <div class="form-floating row">
-            <input asp-for="name" class="col form-control" placeholder="Name"/>
-            <label asp-for="name" class="col col-form-label">
-                Name
-            </label>
+    <form asp-area="Account" asp-controller="Account" asp-action="Register" method="post" class="register-form bg-dark row p-0 align-items-stretch rounded-3 shadow-lg " data-bs-theme="dark">
+        <div class="col-1 rotated-text rounded-end-3">
+            <h1>
+                @ViewData["Title"]
+            </h1>
         </div>
-        <div class="form-floating row mt-2">
-            <input asp-for="email" class="col form-control" placeholder="name@example.com"/>
-            <label asp-for="email" class="col col-form-label">
-                Email
-            </label>
+        <div class="col-8 m-auto my-5 align-items-center justify-content-center">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="returnTo" />
+            <div class="form-floating row">
+                <input asp-for="name" class="col form-control" placeholder="Name" />
+                <label asp-for="name" class="col col-form-label">
+                    Name
+                </label>
+            </div>
+            <div class="form-floating row mt-2">
+                <input asp-for="email" class="col form-control" placeholder="name@example.com" />
+                <label asp-for="email" class="col col-form-label">
+                    Email
+                </label>
+            </div>
+            <div class="form-floating row mt-2">
+                <input type="password" asp-for="password" class="col form-control" placeholder="Password" />
+                <label asp-for="password" class="col col-form-label">
+                    Password
+                </label>
+            </div>
+            <div class="form-floating row mt-2">
+                <input type="password" asp-for="passwordConfirm" class="col form-control" placeholder="Password" aria-describedby="passwordHelpBlock" />
+                <label asp-for="passwordConfirm" class="col col-form-label">
+                    Confirm Password
+                </label>
+            </div>
+            <div class="row mt-5 d-flex justify-content-center">
+                <input type="submit" value="Register" class="btn btn-primary" placeholder="name@example.com" />
+            </div>
         </div>
-        <div class="form-floating row mt-2">
-            <input type="password" asp-for="password" class="col form-control"  placeholder="Password" />
-            <label asp-for="password" class="col col-form-label">
-                Password
-            </label>
-        </div>
-        <div class="form-floating row mt-2">
-            <input type="password" asp-for="passwordConfirm" class="col form-control" placeholder="Password" aria-describedby="passwordHelpBlock"/>
-            <label asp-for="passwordConfirm" class="col col-form-label">
-                Confirm Password
-            </label>
-        </div>
-        <div class="row mt-5 d-flex justify-content-center">
-            <input type="submit" value="Register" class="btn btn-primary" placeholder="name@example.com" />
-        </div>
-    </div>
-</form>
+    </form>
+
+
+</div>
