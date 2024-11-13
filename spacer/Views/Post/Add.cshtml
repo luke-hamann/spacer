@@ -3,7 +3,8 @@
     ViewData["Title"] = "New Post";
 }
 
-<form asp-controller="Post" asp-action="Add" method="post" class="new-post-form row align-items-stretch rounded-3 shadow-lg" data-bs-theme="dark">
+<div class=" ">
+<form asp-controller="Post" asp-action="Add" method="post" class="new-post-form bg-dark row align-items-stretch rounded-3 shadow-lg" data-bs-theme="dark">
     <div class="col-2 rotated-text rounded-end-3">
         <h1>
             @ViewData["Title"]
@@ -35,3 +36,4 @@
         </div>
     </div>
 </form>
+</div>
