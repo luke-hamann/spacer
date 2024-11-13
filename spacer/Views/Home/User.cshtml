@@ -2,9 +2,15 @@
     ViewData["Title"] = ViewBag.userProfile.name;
 }
 
-<h1>
-    @ViewData["Title"]
-</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<div class="profile-header d-flex align-items-center mb-4 p-3 rounded"
+     style="background: linear-gradient(135deg, #3c4045, #2d3033); color: white;">
+    <div>
+        <h2 class="mb-0">@ViewData["Title"]</h2>
+        <p class="text-secondary">Member since <strong>11/8/2024</strong></p>
+    </div>
+</div>
 
 @if (ViewBag.currentUser != null && ViewBag.userProfile.id == ViewBag.currentUser.id)
 {
@@ -16,11 +22,11 @@
 }
 
 <nav class="d-flex mb-3 border-bottom box-shadow">
-    <a asp-controller="Home" asp-action="User" asp-route-section="posts" class="p-3 link-light">
-        Posts
+    <a asp-controller="Home" asp-action="User" asp-route-section="posts" class="p-3 link-light @(ViewBag.selection == "posts" ? "text-primary" : "")">
+        <i class="fas fa-pen"></i> Posts
     </a>
-    <a asp-controller="Home" asp-action="User" asp-route-section="comments" class="p-3 link-light">
-        Comments
+    <a asp-controller="Home" asp-action="User" asp-route-section="comments" class="p-3 link-light @(ViewBag.selection == "comments" ? "text-primary" : "")">
+        <i class="fas fa-comment"></i> Comments
     </a>
 </nav>
 
