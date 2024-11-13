@@ -57,3 +57,14 @@ a {
         width: 40%;
     }
 }
+.content-wrapper {
+    background-color: #2d2f34;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, #3c4045, #2d3033);
+    color: white;
+}
