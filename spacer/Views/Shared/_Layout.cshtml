@@ -1,8 +1,8 @@
 ﻿@{
-    string returnToUrl = Context.Request.Path;
+    string currentUrl = Context.Request.GetEncodedUrl();
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,7 +26,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <form asp-controller="Home" asp-action="Search" method="get" role="search" class="d-flex bg-dark navbar-search-form" data-bs-theme="dark">
                         <div class="input-group">
-                            <select class="form-select " name="subspaceId">
+                            <select class="form-select" name="subspaceId">
                                 <!option value="0" @(ViewBag.searchSubspaceId == 0 ? "selected" : "") >
                                     (all)
                                 </!option>
@@ -47,12 +47,12 @@
                         @if (ViewBag.currentUser == null)
                         {
                             <li class="nav-item">
-                                <a asp-area="Account" asp-controller="Account" asp-action="Login" asp-route-returnTo="@returnToUrl" class="nav-link">
+                                <a asp-area="Account" asp-controller="Account" asp-action="Login" asp-route-returnTo="@currentUrl" class="nav-link">
                                     Login
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a asp-area="Account" asp-controller="Account" asp-action="Register" asp-route-returnTo="@returnToUrl" class="nav-link">
+                                <a asp-area="Account" asp-controller="Account" asp-action="Register" asp-route-returnTo="@currentUrl" class="nav-link">
                                     Register
                                 </a>
                             </li>
@@ -65,8 +65,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <form asp-area="Account" asp-controller="Account" asp-action="Logout" asp-route-returnTo="@returnToUrl" method="post" class="d-flex">
-                                    <button type="submit" class="btn btn-danger">
+                                <form asp-area="Account" asp-controller="Account" asp-action="Logout" asp-route-returnTo="@currentUrl" method="post" class="d-flex">
+                                    <button type="submit" class="btn btn-outline-danger">
                                         Logout
                                     </button>
                                 </form>
@@ -77,13 +77,15 @@
             </div>
         </nav>
     </header>
-    <main>
+    <main class="container">
         @RenderBody()
     </main>
     <div class="container row mt-3">
         <div class="footer-container">
             <div class="footer">
-                <div class="footer-text">&copy; 2024 Yasin, Rohan, &amp; Luke</div>
+                <div class="footer-text">
+                    &copy; 2024 Yasin, Rohan, &amp; Luke
+                </div>
             </div>
         </div>
     </div>
