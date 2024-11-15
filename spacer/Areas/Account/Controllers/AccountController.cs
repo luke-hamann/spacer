@@ -60,7 +60,7 @@ namespace spacer.Areas.Account.Controllers
 
             if (ViewBag.currentUser != null)
             {
-                return Redirect(loginForm.returnTo!);
+                return Redirect(loginForm.returnTo ?? "/");
             }
 
             if (!ModelState.IsValid)
@@ -80,7 +80,7 @@ namespace spacer.Areas.Account.Controllers
             }
 
             HttpContext.Session.SetInt32("userId", user.id);
-            return Redirect(loginForm.returnTo!);
+            return Redirect(loginForm.returnTo ?? "/");
         }
 
         [HttpPost]
@@ -117,7 +117,7 @@ namespace spacer.Areas.Account.Controllers
 
             if (ViewBag.currentUser != null)
             {
-                return Redirect(registerForm.returnTo!);
+                return Redirect(registerForm.returnTo ?? "/");
             }
 
             var user = _context.Users
@@ -154,7 +154,7 @@ namespace spacer.Areas.Account.Controllers
             _context.SaveChanges();
 
             HttpContext.Session.SetInt32("userId", user.id);
-            return Redirect(registerForm.returnTo!);
+            return Redirect(registerForm.returnTo ?? "/");
         }
     }
 }
