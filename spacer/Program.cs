@@ -32,24 +32,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.UseSession();
 
 app.MapControllerRoute(
-    name: "User",
-    pattern: "{controller=Home}/{action=User}/{id}/{section=posts}");
-
-app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapAreaControllerRoute(
-    name: "account",
-    areaName: "Account",
-    pattern: "Account/{controller=Account}/{action=Login}");
+    pattern: "{controller=Home}/{action=Index}");
 
 app.Run();
