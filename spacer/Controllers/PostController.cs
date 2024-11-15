@@ -93,6 +93,8 @@ namespace spacer.Controllers
                 return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login", returnTo = Url.Action("Add") });
             }
 
+            post.userId = ViewBag.currentUser.id;
+
             Subspace? subspace = _context.Subspaces.Find(post.forumId);
 
             if (subspace == null)
