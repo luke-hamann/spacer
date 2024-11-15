@@ -32,14 +32,18 @@ namespace spacer.Areas.Account.Controllers
 
         [HttpGet]
         [Route("login")]
-        public IActionResult Login(string returnTo = "/")
+        public IActionResult Login(string returnTo)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
+            if (returnTo == null || returnTo == "") returnTo = "/";
+
             if (ViewBag.currentUser == null)
             {
-                return View();
+                var loginForm = new LoginForm { returnTo = returnTo };
+                ModelState.Clear();
+                return View(loginForm);
             }
             else
             {
@@ -99,7 +103,9 @@ namespace spacer.Areas.Account.Controllers
                 return Redirect(returnTo);
             }
 
-            return View();
+            var registerForm = new RegisterForm { returnTo = returnTo };
+            ModelState.Clear();
+            return View(registerForm);
         }
 
         [HttpPost]
