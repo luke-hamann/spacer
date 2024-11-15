@@ -115,18 +115,19 @@ namespace spacer.Areas.Account.Controllers
                 return Redirect(registerForm.returnTo!);
             }
 
-            if (registerForm.password != registerForm.passwordConfirm)
-            {
-                ModelState.AddModelError("", "Passwords must match.");
-            }
+            var user = _context.Users
+                .Where(u => u.name == registerForm.name)
+                .FirstOrDefault();
 
-            var user = _context.Users.Where(u => u.name == registerForm.name).FirstOrDefault();
             if (user != null)
             {
                 ModelState.AddModelError("", "That username is already taken.");
             }
 
-            user = _context.Users.Where(u => u.email == registerForm.email).FirstOrDefault();
+            user = _context.Users
+                .Where(u => u.email == registerForm.email)
+                .FirstOrDefault();
+
             if (user != null)
             {
                 ModelState.AddModelError("", "That email is already taken.");
