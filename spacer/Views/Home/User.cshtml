@@ -2,13 +2,11 @@
     ViewData["Title"] = ViewBag.userProfile.name;
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-<div class="profile-header d-flex align-items-center mb-4 p-3 rounded"
-     >
+<div class="profile-header d-flex align-items-center mb-4 p-3 rounded">
     <div>
-        <h2 class="mb-0 text-uppercase">@ViewData["Title"]</h2>
-        <p class="text-secondary">Member since <strong>11/8/2024</strong></p>
+        <h2 class="mb-0 text-uppercase">
+            @ViewData["Title"]
+        </h2>
     </div>
 </div>
 
@@ -33,18 +31,32 @@
 <div class="row container row-gap-3">
     @if (ViewBag.selection == "posts")
     {
-        foreach (Post post in ViewBag.content)
+        if (ViewBag.content.Count == 0)
         {
-            @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+            <span>No posts.</span>
+        }
+        else
+        {
+            foreach (Post post in ViewBag.content)
+            {
+                @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+            }
         }
     }
     else
     {
-        foreach (Comment c in ViewBag.content)
+        if (ViewBag.content.Count == 0)
         {
+            <span>No comments.</span>
+        }
+        else
+        {
+            foreach (Comment c in ViewBag.content)
+            {
 
-            @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", c)
+                @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", c)
 
+            }
         }
     }
 </div>
