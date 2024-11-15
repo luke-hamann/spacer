@@ -6,10 +6,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<SpacerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SpacerContext")));
+builder.Services.AddDbContext<SpacerContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("SpacerContext")
+));
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
+
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.AppendTrailingSlash = true;
+});
 
 var app = builder.Build();
 
