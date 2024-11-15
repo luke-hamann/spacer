@@ -30,7 +30,7 @@ namespace spacer.Controllers
 
         [HttpGet]
         [Route("s/{subspaceName}/post/{id}/{slug?}")]
-        public IActionResult Index(int id, string slug = "")
+        public IActionResult Index(int id, string slug)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
