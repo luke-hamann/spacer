@@ -27,6 +27,7 @@ namespace spacer.Areas.Account.Controllers
             return _context.Subspaces
                 .Include(s => s.posts)
                 .OrderBy(s => s.posts.Count())
+                .Reverse()
                 .ToList();
         }
 
