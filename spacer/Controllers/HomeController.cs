@@ -44,8 +44,8 @@ namespace spacer.Controllers
         }
 
         [HttpGet]
-        [Route("s/{name}")]
-        public IActionResult Subspace(string name, string sort = "newest")
+        [Route("s/{name}/{sort?}")]
+        public IActionResult Subspace(string name, string sort)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
@@ -55,6 +55,13 @@ namespace spacer.Controllers
                 .FirstOrDefault();
 
             if (ViewBag.subspace == null)
+            {
+                return NotFound();
+            }
+
+            if (sort == null || sort == "") sort = "newest";
+
+            if (sort != "oldest" && sort != "newest")
             {
                 return NotFound();
             }
