@@ -31,11 +31,10 @@
 <div class="ms-2 row container row-gap-3">
     @if (ViewBag.selection == "posts")
     {
-        if (ViewBag.content.Count == 0)
-        {
-            <div class="mt-2">No posts.</div>
-        }
-        else
+        <div class="mt-2">
+            @ViewBag.content.Count post@(ViewBag.content.Count == 1 ? "" : "s")
+        </div>
+        if (ViewBag.content.Count > 0)
         {
             foreach (Post post in ViewBag.content)
             {
@@ -45,17 +44,14 @@
     }
     else
     {
-        if (ViewBag.content.Count == 0)
-        {
-            <div class="mt-2">No comments.</div>
-        }
-        else
+        <div class="mt-2">
+            @ViewBag.content.Count comment@(ViewBag.content.Count == 1 ? "" : "s")
+        </div>
+        if (ViewBag.content.Count > 0)
         {
             foreach (Comment c in ViewBag.content)
             {
-
                 @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", c)
-
             }
         }
     }
