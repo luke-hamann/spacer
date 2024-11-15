@@ -24,8 +24,7 @@ namespace spacer.Controllers
         {
             return _context.Subspaces
                 .Include(s => s.posts)
-                .OrderBy(s => s.posts.Count())
-                .Reverse()
+                .OrderByDescending(s => s.posts.Count())
                 .ToList();
         }
 
