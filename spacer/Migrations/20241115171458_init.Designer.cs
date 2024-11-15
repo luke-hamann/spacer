@@ -12,7 +12,7 @@ using spacer.Models;
 namespace spacer.Migrations
 {
     [DbContext(typeof(SpacerContext))]
-    [Migration("20241106201617_init")]
+    [Migration("20241115171458_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2238,45 +2238,45 @@ namespace spacer.Migrations
 
             modelBuilder.Entity("spacer.Models.Comment", b =>
                 {
-                    b.HasOne("spacer.Models.Post", "Post")
-                        .WithMany("Comments")
+                    b.HasOne("spacer.Models.Post", "post")
+                        .WithMany("comments")
                         .HasForeignKey("postId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("spacer.Models.User", "User")
-                        .WithMany("Comments")
+                    b.HasOne("spacer.Models.User", "user")
+                        .WithMany("comments")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Post");
+                    b.Navigation("post");
 
-                    b.Navigation("User");
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("spacer.Models.Post", b =>
                 {
-                    b.HasOne("spacer.Models.Subspace", "Subspace")
+                    b.HasOne("spacer.Models.Subspace", "subspace")
                         .WithMany("posts")
                         .HasForeignKey("forumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("spacer.Models.User", "User")
+                    b.HasOne("spacer.Models.User", "user")
                         .WithMany("posts")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Subspace");
+                    b.Navigation("subspace");
 
-                    b.Navigation("User");
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("spacer.Models.Post", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("comments");
                 });
 
             modelBuilder.Entity("spacer.Models.Subspace", b =>
@@ -2286,7 +2286,7 @@ namespace spacer.Migrations
 
             modelBuilder.Entity("spacer.Models.User", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("comments");
 
                     b.Navigation("posts");
                 });

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Globalization;
-
-namespace spacer.Models
+﻿namespace spacer.Models
 {
-
     public class Comment
     {
         public int id { get; set; }
@@ -13,10 +9,9 @@ namespace spacer.Models
         // Relationships
 
         public int userId { get; set; }
-        public User? User { get; set; } = null!;
+        public User? user { get; set; } = null;
 
         public int postId { get; set; }
-        public Post? Post { get; set; } = null!;
-
+        public Post? post { get; set; } = null;
     }
 }

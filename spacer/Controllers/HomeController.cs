@@ -115,8 +115,8 @@ namespace spacer.Controllers
                 ViewBag.selection = "comments";
 
                 ViewBag.content = _context.Comments
-                    .Include(p => p.Post)
-                    .Include(p => p.User)
+                    .Include(p => p.post)
+                    .Include(p => p.user)
                     .Where(p => p.userId == userId)
                     .ToList();
             }

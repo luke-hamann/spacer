@@ -51,7 +51,7 @@ namespace spacer.Controllers
             }
 
             ViewBag.comments = _context.Comments
-                .Include(c => c.User)
+                .Include(c => c.user)
                 .Where(c => c.postId == id)
                 .OrderBy(c => c.creationDate)
                 .ToList();
