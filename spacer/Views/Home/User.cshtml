@@ -28,12 +28,12 @@
     </a>
 </nav>
 
-<div class="row container row-gap-3">
+<div class="ms-2 row container row-gap-3">
     @if (ViewBag.selection == "posts")
     {
         if (ViewBag.content.Count == 0)
         {
-            <span>No posts.</span>
+            <div class="mt-2">No posts.</div>
         }
         else
         {
@@ -47,7 +47,7 @@
     {
         if (ViewBag.content.Count == 0)
         {
-            <span>No comments.</span>
+            <div class="mt-2">No comments.</div>
         }
         else
         {
