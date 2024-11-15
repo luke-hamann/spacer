@@ -21,13 +21,13 @@ namespace spacer.Models
 
             modelBuilder.Entity<Subspace>()
                   .HasMany(s => s.posts)
-                  .WithOne(p => p.Subspace)
+                  .WithOne(p => p.subspace)
                   .HasForeignKey(p => p.forumId) 
                   .OnDelete(DeleteBehavior.Cascade); // Cascade delete on Subspace
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.posts)
-                .WithOne(p => p.User)
+                .WithOne(p => p.user)
                 .HasForeignKey(p => p.userId) 
                 .OnDelete(DeleteBehavior.Cascade); // Cascade delete on User
 
@@ -38,7 +38,7 @@ namespace spacer.Models
                 .OnDelete(DeleteBehavior.Cascade); // Cascade delete on User
 
             modelBuilder.Entity<Post>()
-                .HasMany(p => p.Comments)
+                .HasMany(p => p.comments)
                 .WithOne(c => c.Post)
                 .HasForeignKey(c => c.postId) 
                 .OnDelete(DeleteBehavior.Restrict);

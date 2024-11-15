@@ -35,8 +35,8 @@ namespace spacer.Controllers
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
             List<Post> posts = _context.Posts
-                .Include(p => p.Subspace)
-                .Include(p => p.User)
+                .Include(p => p.subspace)
+                .Include(p => p.user)
                 .OrderByDescending(s => s.creationDate)
                 .ToList();
 
@@ -63,9 +63,9 @@ namespace spacer.Controllers
             ViewBag.searchSubspaceId = subspaceId;
 
             var query = _context.Posts
-                .Include(p => p.User)
-                .Include(p => p.Subspace)
-                .Where(p => p.Subspace!.id == subspaceId);
+                .Include(p => p.user)
+                .Include(p => p.subspace)
+                .Where(p => p.subspace!.id == subspaceId);
             
             if (sort == "newest")
             {
@@ -104,8 +104,8 @@ namespace spacer.Controllers
                 ViewBag.selection = "posts";
 
                 ViewBag.content = _context.Posts
-                    .Include(p => p.Subspace)
-                    .Include(p => p.User)
+                    .Include(p => p.subspace)
+                    .Include(p => p.user)
                     .Where(p => p.userId == userId)
                     .OrderBy(p => p.creationDate)
                     .ToList();
@@ -135,10 +135,10 @@ namespace spacer.Controllers
             ViewBag.searchSubspaceId = subspaceId;
 
             List<Post> posts = _context.Posts
-                .Include(p => p.User)
-                .Include(p => p.Subspace)
+                .Include(p => p.user)
+                .Include(p => p.subspace)
                 .Where(p => (query == null || p.title.Contains(query) || p.content.Contains(query)))
-                .Where(p => (subspaceId == 0 || p.Subspace!.id == subspaceId))
+                .Where(p => (subspaceId == 0 || p.subspace!.id == subspaceId))
                 .OrderByDescending(p => p.creationDate)
                 .ToList();
 

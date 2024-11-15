@@ -8,7 +8,7 @@
     </div>
     <div class="col">
         <p class="mt-2">
-            <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.Post.Subspace.name" asp-route-id="@Model.postId" class="date">
+            <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.Post!.subspace!.name" asp-route-id="@Model.postId" asp-route-slug="@Model.Post.slug" class="date">
                 @Model.creationDate
             </a>
         </p>

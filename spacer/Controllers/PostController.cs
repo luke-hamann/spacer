@@ -29,21 +29,25 @@ namespace spacer.Controllers
         }
 
         [HttpGet]
-        [Route("s/{subspaceName}/post/{id}")]
-        public IActionResult Index(int id)
+        [Route("s/{subspaceName}/post/{id}/{slug?}")]
+        public IActionResult Index(int id, string slug = "")
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
             Post? post = _context.Posts
-                .Include(p => p.User)
-                .Include(p => p.Subspace)
+                .Include(p => p.user)
+                .Include(p => p.subspace)
                 .Where(p => p.id == id)
                 .FirstOrDefault();
 
             if (post == null)
             {
                 return NotFound();
+            }
+            else if (slug != post.slug)
+            {
+                return RedirectToAction("Index", new { id, post.slug });
             }
 
             ViewBag.comments = _context.Comments
@@ -64,7 +68,7 @@ namespace spacer.Controllers
 
             if (ViewBag.currentUser == null)
             {
-                return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login", returnTo = "/add" });
+                return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login", returnTo = Url.Action("Add") });
             }
 
             var post = new Post();
@@ -86,7 +90,7 @@ namespace spacer.Controllers
 
             if (ViewBag.currentUser == null)
             {
-                return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login" , returnTo = "/add" });
+                return RedirectToRoute(new { area = "Account", controller = "Account", action = "Login", returnTo = Url.Action("Add") });
             }
 
             Subspace? subspace = _context.Subspaces.Find(post.forumId);
@@ -106,7 +110,7 @@ namespace spacer.Controllers
             _context.Add(post);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Post", new { post.id, subspaceName = subspace!.name });
+            return RedirectToAction("Index", "Post", new { subspaceName = subspace!.name, post.id, post.slug });
         }
 
         [HttpPost]
@@ -122,7 +126,7 @@ namespace spacer.Controllers
 
             // Ensure the post exists
             Post? post = _context.Posts
-                .Include(p => p.Subspace)
+                .Include(p => p.subspace)
                 .Where(p => p.id == postId)
                 .FirstOrDefault();
 
@@ -131,11 +135,10 @@ namespace spacer.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
             // Ensure content was submitted
             if (content == null || content == "")
             {
-                return RedirectToAction("Index", "Post", new { post.id, subspaceName = post.Subspace!.name });
+                return RedirectToAction("Index", "Post", new { subspaceName = post.subspace!.name, post.id, post.slug });
             }
 
             // Save the comment
@@ -150,7 +153,7 @@ namespace spacer.Controllers
             _context.Add(comment);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Post", new { post.id, subspaceName = post.Subspace!.name });
+            return RedirectToAction("Index", "Post", new { subspaceName = post.subspace!.name, post.id, post.slug });
         }
     }
 }
