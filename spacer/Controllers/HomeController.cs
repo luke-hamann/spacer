@@ -82,46 +82,34 @@ namespace spacer.Controllers
         }
 
         [HttpGet]
-        [Route("u/{name}")]
-        public new IActionResult User(string name, string section = "posts")
+        [Route("u/{name}/{section?}")]
+        public new IActionResult User(string name, string section)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            ViewBag.userProfile = _context.Users
+            User? user = _context.Users
+                .Include(u => u.posts.OrderByDescending(p => p.creationDate))
+                .Include(u => u.comments.OrderByDescending(c => c.creationDate))
                 .Where(u => u.name == name)
                 .FirstOrDefault();
 
-            if (ViewBag.userProfile == null)
+            if (user == null) return NotFound();
+
+            if (section == null || section == "" || section == "posts")
+            {
+                ViewBag.section = "posts";
+            }
+            else if (section == "comments")
+            {
+                ViewBag.section = "comments";
+            }
+            else
             {
                 return NotFound();
             }
 
-            int userId = ViewBag.userProfile.id;
-
-            if (section == "posts")
-            {
-                ViewBag.selection = "posts";
-
-                ViewBag.content = _context.Posts
-                    .Include(p => p.subspace)
-                    .Include(p => p.user)
-                    .Where(p => p.userId == userId)
-                    .OrderBy(p => p.creationDate)
-                    .ToList();
-            }
-            else
-            {
-                ViewBag.selection = "comments";
-
-                ViewBag.content = _context.Comments
-                    .Include(p => p.post)
-                    .Include(p => p.user)
-                    .Where(p => p.userId == userId)
-                    .ToList();
-            }
-
-            return View();
+            return View(user);
         }
 
         [HttpGet]
