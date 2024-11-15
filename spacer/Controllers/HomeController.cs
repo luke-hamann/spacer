@@ -96,8 +96,6 @@ namespace spacer.Controllers
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
             User? user = _context.Users
-                .Include(u => u.posts.OrderByDescending(p => p.creationDate))
-                .Include(u => u.comments.OrderByDescending(c => c.creationDate))
                 .Where(u => u.name == name)
                 .FirstOrDefault();
 
@@ -106,10 +104,22 @@ namespace spacer.Controllers
             if (section == null || section == "" || section == "posts")
             {
                 ViewBag.section = "posts";
+                user.posts = _context.Posts
+                    .Include(p => p.user)
+                    .Include(p => p.subspace)
+                    .Where(p => p.userId == user.id)
+                    .OrderByDescending(p => p.creationDate)
+                    .ToList();
             }
             else if (section == "comments")
             {
                 ViewBag.section = "comments";
+                user.comments = _context.Comments
+                    .Include(c => c.user)
+                    .Include(c => c.post)
+                    .Where(c => c.userId == user.id)
+                    .OrderByDescending(c => c.creationDate)
+                    .ToList();
             }
             else
             {
