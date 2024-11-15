@@ -1,18 +1,17 @@
-﻿@{
-    ViewData["Title"] = ViewBag.userProfile.name;
+﻿@model User
+@{
+    ViewData["Title"] = Model.name;
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-<div class="profile-header d-flex align-items-center mb-4 p-3 rounded"
-     >
+<div class="profile-header d-flex align-items-center mb-4 p-3 rounded">
     <div>
-        <h2 class="mb-0 text-uppercase">@ViewData["Title"]</h2>
-        <p class="text-secondary">Member since <strong>11/8/2024</strong></p>
+        <h2 class="mb-0 text-uppercase">
+            @ViewData["Title"]
+        </h2>
     </div>
 </div>
 
-@if (ViewBag.currentUser != null && ViewBag.userProfile.id == ViewBag.currentUser.id)
+@if (ViewBag.currentUser != null && Model.id == ViewBag.currentUser.id)
 {
     <div>
         <a asp-controller="Post" asp-action="Add" class="btn btn-primary">
@@ -22,29 +21,41 @@
 }
 
 <nav class="d-flex mb-3 border-bottom box-shadow">
-    <a asp-controller="Home" asp-action="User" asp-route-section="posts" class="p-3 link-light @(ViewBag.selection == "posts" ? "text-success" : "")">
+    <a asp-controller="Home" asp-action="User" asp-route-section="posts"
+        class="p-3 link-light @(ViewBag.section == "posts" ? "text-success" : "")">
         <i class="fas fa-pen"></i> Posts
     </a>
-    <a asp-controller="Home" asp-action="User" asp-route-section="comments" class="p-3 link-light @(ViewBag.selection == "comments" ? "text-success" : "")">
+    <a asp-controller="Home" asp-action="User" asp-route-section="comments"
+        class="p-3 link-light @(ViewBag.section == "comments" ? "text-success" : "")">
         <i class="fas fa-comment"></i> Comments
     </a>
 </nav>
 
-<div class="row container row-gap-3">
-    @if (ViewBag.selection == "posts")
+<div class="ms-2 row container row-gap-3">
+    @if (ViewBag.section == "posts")
     {
-        foreach (Post post in ViewBag.content)
+        <div class="mt-2">
+            @Model.posts.Count post@(Model.posts.Count == 1 ? "" : "s")
+        </div>
+        if (Model.posts.Count > 0)
         {
-            @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+            foreach (Post post in Model.posts)
+            {
+                @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
+            }
         }
     }
     else
     {
-        foreach (Comment c in ViewBag.content)
+        <div class="mt-2">
+            @Model.comments.Count comment@(Model.comments.Count == 1 ? "" : "s")
+        </div>
+        if (Model.comments.Count > 0)
         {
-
-            @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", c)
-
+            foreach (Comment comment in Model.comments)
+            {
+                @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", comment)
+            }
         }
     }
 </div>

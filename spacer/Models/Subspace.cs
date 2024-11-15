@@ -7,10 +7,8 @@
         public int id { get; set; }
         public string name { get; set; }
 
+        // Relationships
 
-
-        //Relationships
         public ICollection<Post> posts { get; set; }
-
     }
 }

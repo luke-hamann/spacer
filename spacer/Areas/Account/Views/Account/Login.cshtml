@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Login";
 }
-<div class=" ">
+<div>
     <form asp-action="Login" method="post" class="login-form row bg-dark p-0 m-auto align-items-stretch rounded-3 shadow-lg" data-bs-theme="dark">
         <div class="col-1 rotated-text rounded-end-3">
             <h1>
@@ -13,13 +13,13 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="returnTo" />
             <div class="form-floating row">
-                <input type="text" asp-for="identity" class="col-sm form-control" placeholder="name@example.com" />
+                <input asp-for="identity" class="col-sm form-control" placeholder="name@example.com" />
                 <label asp-for="identity" class="col-sm col-form-label">
                     Username/Email
                 </label>
             </div>
             <div class="form-floating row mt-2">
-                <input type="password" asp-for="password" class="col-sm form-control" placeholder="Password" aria-describedby="passwordHelpBlock" />
+                <input type="password" asp-for="password" class="col-sm form-control" placeholder="Password" />
                 <label asp-for="password" class="col-sm col-form-label">
                     Password
                 </label>
@@ -29,6 +29,4 @@
             </div>
         </div>
     </form>
-
-
 </div>

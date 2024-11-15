@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace spacer.Models
+﻿namespace spacer.Models
 {
     public class Post
     {
         public Post()
         {
-            Comments = new HashSet<Comment>();
+            comments = new HashSet<Comment>();
         }
 
         public int id { get; set; }
-
         public string title { get; set; }
-
         public string content { get; set; }
-
         public DateTime creationDate { get; set; }
 
         public int forumId { get; set; }
-
-        public Subspace? Subspace { get; set; } = null!;
+        public Subspace? subspace { get; set; } = null;
 
         public int userId { get; set; }
-        public User? User { get; set; } = null!;
+        public User? user { get; set; } = null;
 
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Comment> comments { get; set; }
 
+        public string slug => title.Trim().ToLower().Replace(" ", "-");
     }
 }

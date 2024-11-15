@@ -24,7 +24,7 @@ namespace spacer.Controllers
         {
             return _context.Subspaces
                 .Include(s => s.posts)
-                .OrderBy(s => s.posts.Count())
+                .OrderByDescending(s => s.posts.Count())
                 .ToList();
         }
 
@@ -34,9 +34,9 @@ namespace spacer.Controllers
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            var posts = _context.Posts
-                .Include(p => p.Subspace)
-                .Include(p => p.User)
+            List<Post> posts = _context.Posts
+                .Include(p => p.subspace)
+                .Include(p => p.user)
                 .OrderByDescending(s => s.creationDate)
                 .ToList();
 
@@ -44,25 +44,35 @@ namespace spacer.Controllers
         }
 
         [HttpGet]
-        [Route("s/{name}")]
-        public IActionResult Subspace(string name, string sort = "newest")
+        [Route("s/{name}/{sort?}")]
+        public IActionResult Subspace(string name, string sort)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
-            ViewBag.subspace = _context.Subspaces.Where(s => s.name == name).FirstOrDefault();
+
+            ViewBag.subspace = _context.Subspaces
+                .Where(s => s.name == name)
+                .FirstOrDefault();
 
             if (ViewBag.subspace == null)
             {
                 return NotFound();
             }
 
-            int id = ViewBag.subspace.id;
-            ViewBag.searchSubspaceId = id;
+            if (sort == null || sort == "") sort = "newest";
+
+            if (sort != "oldest" && sort != "newest")
+            {
+                return NotFound();
+            }
+
+            int subspaceId = ViewBag.subspace.id;
+            ViewBag.searchSubspaceId = subspaceId;
 
             var query = _context.Posts
-                .Include(p => p.User)
-                .Include(p => p.Subspace)
-                .Where(p => p.Subspace!.id == id);
+                .Include(p => p.user)
+                .Include(p => p.subspace)
+                .Where(p => p.subspace!.id == subspaceId);
             
             if (sort == "newest")
             {
@@ -79,43 +89,34 @@ namespace spacer.Controllers
         }
 
         [HttpGet]
-        [Route("u/{name}")]
-        public new IActionResult User(string name, string section = "posts")
+        [Route("u/{name}/{section?}")]
+        public new IActionResult User(string name, string section)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            ViewBag.userProfile = _context.Users.Where(u => u.name == name).FirstOrDefault();
+            User? user = _context.Users
+                .Include(u => u.posts.OrderByDescending(p => p.creationDate))
+                .Include(u => u.comments.OrderByDescending(c => c.creationDate))
+                .Where(u => u.name == name)
+                .FirstOrDefault();
 
-            if (ViewBag.userProfile == null)
+            if (user == null) return NotFound();
+
+            if (section == null || section == "" || section == "posts")
+            {
+                ViewBag.section = "posts";
+            }
+            else if (section == "comments")
+            {
+                ViewBag.section = "comments";
+            }
+            else
             {
                 return NotFound();
             }
 
-            int id = ViewBag.userProfile.id;
-
-            if (section == "posts")
-            {
-                ViewBag.selection = "posts";
-
-                ViewBag.content = _context.Posts
-                    .Include(p => p.Subspace)
-                    .Include(p => p.User)
-                    .Where(p => p.userId == id)
-                    .OrderBy(p => p.creationDate)
-                    .ToList();
-            } else
-            {
-                ViewBag.selection = "comments";
-
-                ViewBag.content = _context.Comments
-                    .Include(p => p.Post)
-                    .Include(p => p.User)
-                    .Where(p => p.userId == id)
-                    .ToList();
-            }
-
-            return View();
+            return View(user);
         }
 
         [HttpGet]
@@ -124,15 +125,16 @@ namespace spacer.Controllers
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
+
             ViewBag.searchQuery = query;
             ViewBag.searchSubspaceId = subspaceId;
 
-
             List<Post> posts = _context.Posts
-                .Include(p => p.User)
-                .Include(p => p.Subspace)
-                .Where(p => (query == "" || p.title.Contains(query) || p.content.Contains(query)))
-                .Where(p => subspaceId == 0 || p.Subspace!.id == subspaceId)
+                .Include(p => p.user)
+                .Include(p => p.subspace)
+                .Where(p => (query == null || p.title.Contains(query) || p.content.Contains(query)))
+                .Where(p => (subspaceId == 0 || p.subspace!.id == subspaceId))
+                .OrderByDescending(p => p.creationDate)
                 .ToList();
 
             return View(posts);

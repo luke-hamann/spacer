@@ -2,13 +2,13 @@
 
 <div class="row p-0 align-items-stretch rounded-3 row-gap-3 bg-dark comment-container">
     <div class="col-1 post-user rounded-end-3">
-        <a asp-controller="Home" asp-action="User" asp-route-name="@Model.User.name" class="post-user-text text-uppercase">
-            @Model.User.name
+        <a asp-controller="Home" asp-action="User" asp-route-name="@Model.user.name" class="post-user-text text-uppercase">
+            @Model.user!.name
         </a>
     </div>
     <div class="col">
         <p class="mt-2">
-            <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.Post.Subspace.name" asp-route-id="@Model.postId" class="date">
+            <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.post!.subspace!.name" asp-route-id="@Model.postId" asp-route-slug="@Model.post.slug" class="date">
                 @Model.creationDate
             </a>
         </p>

@@ -26,20 +26,24 @@ namespace spacer.Areas.Account.Controllers
         {
             return _context.Subspaces
                 .Include(s => s.posts)
-                .OrderBy(s => s.posts.Count())
+                .OrderByDescending(s => s.posts.Count())
                 .ToList();
         }
 
         [HttpGet]
         [Route("login")]
-        public IActionResult Login(string returnTo = "/")
+        public IActionResult Login(string returnTo)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
+            if (returnTo == null || returnTo == "") returnTo = "/";
+
             if (ViewBag.currentUser == null)
             {
-                return View();
+                var loginForm = new LoginForm { returnTo = returnTo };
+                ModelState.Clear();
+                return View(loginForm);
             }
             else
             {
@@ -99,7 +103,9 @@ namespace spacer.Areas.Account.Controllers
                 return Redirect(returnTo);
             }
 
-            return View();
+            var registerForm = new RegisterForm { returnTo = returnTo };
+            ModelState.Clear();
+            return View(registerForm);
         }
 
         [HttpPost]
@@ -114,18 +120,19 @@ namespace spacer.Areas.Account.Controllers
                 return Redirect(registerForm.returnTo!);
             }
 
-            if (registerForm.password != registerForm.passwordConfirm)
-            {
-                ModelState.AddModelError("", "Passwords must match.");
-            }
+            var user = _context.Users
+                .Where(u => u.name == registerForm.name)
+                .FirstOrDefault();
 
-            var user = _context.Users.Where(u => u.name == registerForm.name).FirstOrDefault();
             if (user != null)
             {
                 ModelState.AddModelError("", "That username is already taken.");
             }
 
-            user = _context.Users.Where(u => u.email == registerForm.email).FirstOrDefault();
+            user = _context.Users
+                .Where(u => u.email == registerForm.email)
+                .FirstOrDefault();
+
             if (user != null)
             {
                 ModelState.AddModelError("", "That email is already taken.");

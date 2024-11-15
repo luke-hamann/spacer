@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using spacer.Models;
-using System;
 
 namespace spacer.Models
 {
@@ -12,7 +10,6 @@ namespace spacer.Models
         public DbSet<Subspace> Subspaces { get; set; } = null!;
         public DbSet<Post> Posts { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
-
         public DbSet<Comment> Comments { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,27 +18,27 @@ namespace spacer.Models
 
             modelBuilder.Entity<Subspace>()
                   .HasMany(s => s.posts)
-                  .WithOne(p => p.Subspace)
+                  .WithOne(p => p.subspace)
                   .HasForeignKey(p => p.forumId) 
                   .OnDelete(DeleteBehavior.Cascade); // Cascade delete on Subspace
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.posts)
-                .WithOne(p => p.User)
+                .WithOne(p => p.user)
                 .HasForeignKey(p => p.userId) 
                 .OnDelete(DeleteBehavior.Cascade); // Cascade delete on User
 
             modelBuilder.Entity<User>()
-                .HasMany(u => u.Comments)
-                .WithOne(c => c.User)
+                .HasMany(u => u.comments)
+                .WithOne(c => c.user)
                 .HasForeignKey(c => c.userId) 
                 .OnDelete(DeleteBehavior.Cascade); // Cascade delete on User
 
             modelBuilder.Entity<Post>()
-                .HasMany(p => p.Comments)
-                .WithOne(c => c.Post)
+                .HasMany(p => p.comments)
+                .WithOne(c => c.post)
                 .HasForeignKey(c => c.postId) 
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade); // Cascade delete on Post
 
             // Seed Data
 

@@ -1,26 +1,21 @@
 ﻿@model Post
-<div class="row p-0 align-items-stretch rounded-3 row-gap-3  bg-dark post-container">
-    <div class="col-1 post-user rounded-end-1  ">
-        <a asp-controller="Home" asp-action="User" asp-route-name="@Model.User.name" class="post-user-text text-uppercase">
-            @Model.User.name
+
+<div class="row p-0 align-items-stretch rounded-3 row-gap-3 bg-dark post-container">
+    <div class="col-1 post-user rounded-end-1">
+        <a asp-controller="Home" asp-action="User" asp-route-name="@Model.user.name" class="post-user-text text-uppercase">
+            @Model.user!.name
         </a>
     </div>
-    <div class="col ">
-
-        <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.Subspace.name" asp-route-id="@Model.id" class="title text-uppercase">
+    <div class="col">
+        <a asp-controller="Post" asp-action="Index" asp-route-subspaceName="@Model.subspace!.name" asp-route-id="@Model.id" asp-route-slug="@Model.slug" class="title text-uppercase">
             @Model.title
         </a>
-
-        <a asp-controller="Home" asp-action="Subspace" asp-route-name="@Model.Subspace.name" class="post-subspace">
-            @Model.Subspace.name
+        <a asp-controller="Home" asp-action="Subspace" asp-route-name="@Model.subspace.name" class="post-subspace">
+            @Model.subspace.name
         </a>
-
         <p class="date">
             @Model.creationDate
         </p>
-
         <p class="lead">@Model.content</p>
-
     </div>
-
 </div>
