@@ -22,6 +22,6 @@ namespace spacer.Models
 
         public ICollection<Comment> comments { get; set; }
 
-        public string slug => Regex.Replace(title.Trim().ToLower(), "[^\\w-]", "-");
+        public string slug => Regex.Replace((title ?? "").Trim().ToLower(), "[^\\w-]", "-");
     }
 }
