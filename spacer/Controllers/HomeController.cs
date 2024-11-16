@@ -37,7 +37,7 @@ namespace spacer.Controllers
             List<Post> posts = _context.Posts
                 .Include(p => p.subspace)
                 .Include(p => p.user)
-                .OrderByDescending(s => s.creationDate)
+                .OrderByDescending(p => p.creationDate)
                 .ToList();
 
             return View(posts);
@@ -50,29 +50,31 @@ namespace spacer.Controllers
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
 
-            ViewBag.subspace = _context.Subspaces
+            Subspace? subspace = _context.Subspaces
                 .Where(s => s.name == name)
                 .FirstOrDefault();
 
-            if (ViewBag.subspace == null)
+            if (subspace == null)
             {
                 return NotFound();
             }
 
-            if (sort == null || sort == "") sort = "newest";
+            if (sort == null || sort == "")
+            {
+                sort = "newest";
+            }
 
             if (sort != "oldest" && sort != "newest")
             {
                 return NotFound();
             }
 
-            int subspaceId = ViewBag.subspace.id;
-            ViewBag.searchSubspaceId = subspaceId;
+            ViewBag.searchSubspaceId = subspace.id;
 
             var query = _context.Posts
                 .Include(p => p.user)
                 .Include(p => p.subspace)
-                .Where(p => p.subspace!.id == subspaceId);
+                .Where(p => p.subspace!.id == subspace.id);
             
             if (sort == "newest")
             {
@@ -83,9 +85,9 @@ namespace spacer.Controllers
                 query = query.OrderBy(p => p.creationDate);
             }
 
-            List<Post> posts = query.ToList();
+            subspace.posts = query.ToList();
 
-            return View(posts);
+            return View(subspace);
         }
 
         [HttpGet]
@@ -131,7 +133,7 @@ namespace spacer.Controllers
 
         [HttpGet]
         [Route("search")]
-        public IActionResult Search(string query = "", int subspaceId = 0)
+        public IActionResult Search(string query, int subspaceId)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();

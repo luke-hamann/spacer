@@ -1,16 +1,16 @@
-﻿@model List<Post>
+﻿@model Subspace
 @{
-    ViewData["Title"] = ViewBag.subspace.name;
+    ViewData["Title"] = Model.name;
 }
 
 <div class="d-flex justify-content-between">
     <h1>
-        @ViewBag.subspace.name
+        @ViewData["Title"]
     </h1>
     @if (ViewBag.currentUser != null)
     {
         <div class="d-flex align-items-center">
-            <a asp-controller="Post" asp-action="Add" asp-route-subspaceId="@ViewBag.subspace.id" class="btn btn-primary">
+            <a asp-controller="Post" asp-action="Add" asp-route-subspaceId="@Model.id" class="btn btn-primary">
                 &plus; New Post
             </a>
         </div>
@@ -27,7 +27,7 @@
 </div>
 
 <div class="mt-3 container row-gap-3">
-    @foreach (var post in Model)
+    @foreach (var post in Model.posts)
     {
         @await Html.PartialAsync("~/Views/Shared/_Post.cshtml", post)
     }

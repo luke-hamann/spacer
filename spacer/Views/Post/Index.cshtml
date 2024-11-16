@@ -25,13 +25,13 @@
 </h2>
 
 <div>
-    @ViewBag.comments.Count comment@(ViewBag.comments.Count == 1 ? "" : "s")
+    @Model.comments.Count comment@(Model.comments.Count == 1 ? "" : "s")
 </div>
 
-@if (ViewBag.comments.Count > 0)
+@if (Model.comments.Count > 0)
 {
     <div class="container row row-gap-3 mt-3">
-        @foreach (Comment comment in ViewBag.comments)
+        @foreach (Comment comment in Model.comments)
         {
             <div class="col-12">
                 @await Html.PartialAsync("~/Views/Shared/_Comment.cshtml", comment)
