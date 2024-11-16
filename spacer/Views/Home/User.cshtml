@@ -3,12 +3,10 @@
     ViewData["Title"] = Model.name;
 }
 
-<div class="profile-header d-flex align-items-center mb-4 p-3 rounded">
-    <div>
-        <h2 class="mb-0 text-uppercase">
-            @ViewData["Title"]
-        </h2>
-    </div>
+<div class="profile-header mb-4 p-3 rounded">
+    <h2 class="mb-0 text-uppercase">
+        @ViewData["Title"]
+    </h2>
 </div>
 
 @if (ViewBag.currentUser != null && Model.id == ViewBag.currentUser.id)
