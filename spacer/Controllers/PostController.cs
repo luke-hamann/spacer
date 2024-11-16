@@ -50,7 +50,8 @@ namespace spacer.Controllers
                 return RedirectToAction("Index", new { id, post.slug });
             }
 
-            ViewBag.comments = _context.Comments
+            post.comments = _context.Comments
+                .Include(c => c.post)
                 .Include(c => c.user)
                 .Where(c => c.postId == id)
                 .OrderBy(c => c.creationDate)
@@ -61,7 +62,7 @@ namespace spacer.Controllers
 
         [HttpGet]
         [Route("add")]
-        public IActionResult Add(int subspaceId = 0)
+        public IActionResult Add(int subspaceId)
         {
             ViewBag.currentUser = GetCurrentUser();
             ViewBag.popularSubspaces = GetPopularSubspaces();
