@@ -1,4 +1,6 @@
-﻿namespace spacer.Models
+﻿using System.Text.RegularExpressions;
+
+namespace spacer.Models
 {
     public class Post
     {
@@ -20,6 +22,6 @@
 
         public ICollection<Comment> comments { get; set; }
 
-        public string slug => title.Trim().ToLower().Replace(" ", "-");
+        public string slug => Regex.Replace(title.Trim().ToLower(), "[^\\w-]", "-");
     }
 }
