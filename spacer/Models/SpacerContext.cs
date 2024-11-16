@@ -38,7 +38,7 @@ namespace spacer.Models
                 .HasMany(p => p.comments)
                 .WithOne(c => c.post)
                 .HasForeignKey(c => c.postId) 
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete on Post
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Seed Data
 

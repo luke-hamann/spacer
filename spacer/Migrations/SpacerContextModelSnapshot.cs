@@ -2239,7 +2239,7 @@ namespace spacer.Migrations
                     b.HasOne("spacer.Models.Post", "post")
                         .WithMany("comments")
                         .HasForeignKey("postId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("spacer.Models.User", "user")

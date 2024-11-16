@@ -12,7 +12,7 @@ using spacer.Models;
 namespace spacer.Migrations
 {
     [DbContext(typeof(SpacerContext))]
-    [Migration("20241115171458_init")]
+    [Migration("20241116125813_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2241,7 +2241,7 @@ namespace spacer.Migrations
                     b.HasOne("spacer.Models.Post", "post")
                         .WithMany("comments")
                         .HasForeignKey("postId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("spacer.Models.User", "user")

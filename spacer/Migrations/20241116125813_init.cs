@@ -85,7 +85,7 @@ namespace spacer.Migrations
                         column: x => x.postId,
                         principalTable: "Posts",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_Users_userId",
                         column: x => x.userId,
